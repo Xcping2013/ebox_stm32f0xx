@@ -42,7 +42,7 @@ extern "C" {
 		while (millis_seconds < 100);
 		cpu_calculate_per_sec = cpu_calculate_per_sec * 10;
 //		////////////////////////////////
-//		ADC1_init();
+		ADC1_init();
 
 //		NVIC_PriorityGroupConfig(NVIC_GROUP_CONFIG);
 
