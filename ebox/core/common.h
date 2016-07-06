@@ -43,19 +43,6 @@ This specification is preliminary and is subject to change at any time without n
 
 #define PI 3.1415926535898
 
-
-//typedef enum
-//{
-//    AIN         = 0x0,
-//    INPUT       = 0x04,
-//    INPUT_PD    = 0x28,
-//    INPUT_PU    = 0x48,
-//    OUTPUT_OD   = 0x14,
-//    OUTPUT_PP   = 0x10,
-//    AF_OD       = 0x1C,
-//    AF_PP       = 0x18
-//} PIN_MODE;
-
 typedef enum
 {
     OUTPUT_PP    = 0x0,    
@@ -80,6 +67,7 @@ typedef enum
     AF_PP_PU        ,
     AF_PP_PD        ,
 } PIN_MODE;
+
 
 class GPIO
 {
@@ -107,6 +95,7 @@ public:
     GPIO_TypeDef *port;
     uint16_t pin;
 };
+
 class PARALLEL_GPIO
 {
 public:
@@ -118,6 +107,7 @@ public:
     uint8_t read();
     uint8_t read_low_4_bit();
 };
+
 class SYSTEM
 {
 public:
