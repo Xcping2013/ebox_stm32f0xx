@@ -1,29 +1,14 @@
-# Compiled Object files
-*.slo
-*.lo
 *.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+*.crf
+*.d
+*.hex
+*.axf
+*.uvguix.*
+*.html
+*.htm
+*.dep
+*.map
+*.lnp
 *.lib
-
-# Executables
-*.exe
-*.out
-*.app
+*.txt
+*.bin
