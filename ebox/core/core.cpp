@@ -42,6 +42,8 @@ extern "C" {
 		while (millis_seconds < 100);
 		cpu_calculate_per_sec = cpu_calculate_per_sec * 10;
 //		////////////////////////////////
+extern GPIO PA0;
+		PA0.mode(AIN);
 		ADC1_init();
 
 //		NVIC_PriorityGroupConfig(NVIC_GROUP_CONFIG);

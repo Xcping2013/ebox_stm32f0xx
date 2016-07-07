@@ -26,7 +26,6 @@ This specification is preliminary and is subject to change at any time without n
 /* Value of analog reference voltage (Vref+), connected to analog voltage   */
 /* supply Vdda (unit: mV).                                                  */
 #define VDDA_APPLI                       ((uint32_t)3300)
-
 /* Init variable out of expected ADC conversion data range */
 #define VAR_CONVERTED_DATA_INIT_VALUE    (__LL_ADC_DIGITAL_SCALE(LL_ADC_RESOLUTION_12B) + 1)
 /* Variables for ADC conversion data */
@@ -221,90 +220,92 @@ int adc_inited = 0;
 */
 void ADC1_init(void)
 {
-	
+	__IO uint32_t wait_loop_index = 0;
 	// The ADC initialization is done once
-	if (adc_inited == 0) {
-		adc_inited = 1;
-		
+	// if (adc_inited == 0) {
+	// adc_inited = 1;
+
+	// }
+
+
+	/* Enable ADC clock (core clock) */
+	LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_ADC1);
+
+	if (__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE() == 0)
+	{
+		/* Set ADC clock (conversion clock) common to several ADC instances */
+		/* Note: On this STM32 serie, ADC common clock asynchonous prescaler      */
+		/*       is applied to each ADC instance if ADC instance clock is         */
+		/*       set to clock source asynchronous                                 */
+		/*       (refer to function "LL_ADC_SetClock()" below).                   */
+		// LL_ADC_SetCommonClock(__LL_ADC_COMMON_INSTANCE(ADC1), LL_ADC_CLOCK_ASYNC_DIV1)
+
+		/* Set ADC measurement path to internal channels */
+		//LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(ADC1), LL_ADC_PATH_INTERNAL_TEMPSENSOR);
+
+		/* Delay for ADC temperature sensor stabilization time.                   */
+		// wait_loop_index = ((LL_ADC_DELAY_TEMPSENSOR_STAB_US * (SystemCoreClock / (100000 * 2))) / 10);
+		// while (wait_loop_index != 0)
+		// {
+			// wait_loop_index--;
+		// }
+
 	}
-	
-  /*## Configuration of ADC ##################################################*/  
-  /*## Configuration of ADC hierarchical scope: common to several ADC ########*/
-  
-  /* Enable ADC clock (core clock) */
-  LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_ADC1);
-  
-  if(__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE() == 0)
-  {
-    /* Set ADC clock (conversion clock) common to several ADC instances */
-    /* Note: On this STM32 serie, ADC common clock asynchonous prescaler      */
-    /*       is applied to each ADC instance if ADC instance clock is         */
-    /*       set to clock source asynchronous                                 */
-    /*       (refer to function "LL_ADC_SetClock()" below).                   */
-    // LL_ADC_SetCommonClock(__LL_ADC_COMMON_INSTANCE(ADC1), LL_ADC_CLOCK_ASYNC_DIV1)    
-    /* Set ADC measurement path to internal channels */
-    LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(ADC1), LL_ADC_PATH_INTERNAL_TEMPSENSOR);
-    
-    /* Delay for ADC temperature sensor stabilization time.                   */
-//    wait_loop_index = ((LL_ADC_DELAY_TEMPSENSOR_STAB_US * (SystemCoreClock / (100000 * 2))) / 10);
-//    while(wait_loop_index != 0)
-//    {
-//      wait_loop_index--;
-//    }
-  
-  }  
-  
-  /*## Configuration of ADC hierarchical scope: ADC instance #################*/
-  /*       ADC must be disabled.                                              */
-  if (LL_ADC_IsEnabled(ADC1) == 0)
-  {
-    /* Set ADC clock (conversion clock) */
-    LL_ADC_SetClock(ADC1, LL_ADC_CLOCK_SYNC_PCLK_DIV2);    
-    /* Set ADC data resolution */
-    // LL_ADC_SetResolution(ADC1, LL_ADC_RESOLUTION_12B);    
-    /* Set ADC conversion data alignment */
-    // LL_ADC_SetResolution(ADC1, LL_ADC_DATA_ALIGN_RIGHT);    
-    /* Set ADC low power mode */
-    // LL_ADC_SetLowPowerMode(ADC1, LL_ADC_LP_MODE_NONE);    
-    /* Set ADC channels sampling time */
-    LL_ADC_SetSamplingTimeCommonChannels(ADC1, LL_ADC_SAMPLINGTIME_239CYCLES_5);    
-  }  
-  
-  /*## Configuration of ADC hierarchical scope: ADC group regular ############*/
-  if ((LL_ADC_IsEnabled(ADC1) == 0)               ||
-      (LL_ADC_REG_IsConversionOngoing(ADC1) == 0)   )
-  {
-    /* Set ADC group regular trigger source */
-    LL_ADC_REG_SetTriggerSource(ADC1, LL_ADC_REG_TRIG_SOFTWARE);    
-    /* Set ADC group regular trigger polarity */
-    // LL_ADC_REG_SetTriggerEdge(ADC1, LL_ADC_REG_TRIG_EXT_RISING);    
-    /* Set ADC group regular continuous mode */
-    LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_SINGLE);    
-    /* Set ADC group regular conversion data transfer */
-    // LL_ADC_REG_SetDMATransfer(ADC1, LL_ADC_REG_DMA_TRANSFER_NONE);    
-    /* Set ADC group regular overrun behavior */
-    LL_ADC_REG_SetOverrun(ADC1, LL_ADC_REG_OVR_DATA_OVERWRITTEN);    
-    /* Set ADC group regular sequencer */
-    /* Set ADC group regular sequencer discontinuous mode */
-    // LL_ADC_REG_SetSequencerDiscont(ADC1, LL_ADC_REG_SEQ_DISCONT_DISABLE);    
-    /* Set ADC group regular sequence: channel on rank corresponding to       */
-    /* channel number.                                                        */
-    LL_ADC_REG_SetSequencerChannels(ADC1, LL_ADC_CHANNEL_TEMPSENSOR);
-  }
-  
-  /*## Configuration of ADC hierarchical scope: channels #####################*/
-  if ((LL_ADC_IsEnabled(ADC1) == 0)               ||
-      (LL_ADC_REG_IsConversionOngoing(ADC1) == 0)   )
-  {
-    /* Set ADC channels sampling time */
-    /* Note: On this STM32 serie, sampling time is common to all channels     */
-    /*       of the entire ADC instance.                                      */
-    /*       See sampling time configured above, at ADC instance scope.       */
-    
-  } 
-  
-    if (LL_ADC_IsEnabled(ADC1) == 0)
-  	{
+
+	/*## Configuration of ADC hierarchical scope: ADC instance #################*/
+	/*       ADC must be disabled.                                              */
+	if (LL_ADC_IsEnabled(ADC1) == 0)
+	{
+		// ADC Initial
+		/* Set ADC clock (conversion clock) */
+		LL_ADC_SetClock(ADC1, LL_ADC_CLOCK_SYNC_PCLK_DIV2);
+		/* Set ADC data resolution */
+		LL_ADC_SetResolution(ADC1, LL_ADC_RESOLUTION_12B);
+		/* Set ADC conversion data alignment */
+		LL_ADC_SetResolution(ADC1, LL_ADC_DATA_ALIGN_RIGHT);
+		/* Set ADC low power mode */
+		LL_ADC_SetLowPowerMode(ADC1, LL_ADC_LP_MODE_NONE);
+	}
+
+	/*## Configuration of ADC hierarchical scope: ADC group regular ############*/
+	if ((LL_ADC_IsEnabled(ADC1) == 0)               ||
+	        (LL_ADC_REG_IsConversionOngoing(ADC1) == 0)   )
+	{
+		/* Set ADC group regular trigger source */
+		LL_ADC_REG_SetTriggerSource(ADC1, LL_ADC_REG_TRIG_SOFTWARE);
+		/* Set ADC group regular trigger polarity 外部触法极性 */
+		// LL_ADC_REG_SetTriggerEdge(ADC1, LL_ADC_REG_TRIG_EXT_RISING);
+		/* Set ADC group regular conversion data transfer */
+		// LL_ADC_REG_SetDMATransfer(ADC1, LL_ADC_REG_DMA_TRANSFER_NONE);
+		/* Set ADC group regular overrun behavior */
+		LL_ADC_REG_SetOverrun(ADC1, LL_ADC_REG_OVR_DATA_OVERWRITTEN);
+
+		/* Set ADC group regular sequencer */
+		/* Set ADC group regular continuous mode 一次触发转换序列中的所有通道*/
+		LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_SINGLE);
+		LL_ADC_REG_SetSequencerDiscont(ADC1, LL_ADC_REG_SEQ_DISCONT_DISABLE);
+
+		/* Set ADC group regular continuous mode 一次触发按顺序转换序列中的一个通道*/
+//    LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_SINGLE);
+//    LL_ADC_REG_SetSequencerDiscont(ADC1, LL_ADC_REG_SEQ_DISCONT_1RANK );
+		/* Set ADC group regular sequence: channel on rank corresponding to channel number.  */
+		LL_ADC_REG_SetSequencerChannels(ADC1, LL_ADC_CHANNEL_TEMPSENSOR);
+		//LL_ADC_REG_SetSequencerChannels(ADC1,LL_ADC_CHANNEL_0);
+	}
+
+	/*## Configuration of ADC hierarchical scope: channels #####################*/
+	if ((LL_ADC_IsEnabled(ADC1) == 0)               ||
+	        (LL_ADC_REG_IsConversionOngoing(ADC1) == 0)   )
+	{
+		/* Set ADC channels sampling time */
+		/* Note: On this STM32 serie, sampling time is common to all channels     */
+		/*       of the entire ADC instance.                                      */
+		/*       See sampling time configured above, at ADC instance scope.       */
+		LL_ADC_SetSamplingTimeCommonChannels(ADC1, LL_ADC_SAMPLINGTIME_239CYCLES_5);
+	}
+
+	if (LL_ADC_IsEnabled(ADC1) == 0)
+	{
 		/* Run ADC self calibration */
 		LL_ADC_StartCalibration(ADC1);
 
@@ -312,17 +313,25 @@ void ADC1_init(void)
 		{
 		}
 	}
-	
-	/* Enable ADC */
-    LL_ADC_Enable(ADC1);
-	/* Poll for ADC ready to convert */
-    while (LL_ADC_IsActiveFlag_ADRDY(ADC1) == 0)
-    {
-    }
 
-	    /* Init variable containing ADC conversion data */
-    uhADCxConvertedData = VAR_CONVERTED_DATA_INIT_VALUE;
-	    /* Retrieve ADC conversion data */
-    /* (data scale corresponds to ADC resolution: 12 bits) */
-    uhADCxConvertedData = LL_ADC_REG_ReadConversionData12(ADC1);
+	/* Enable ADC */
+	LL_ADC_Enable(ADC1);
+	/* Poll for ADC ready to convert */
+	while (LL_ADC_IsActiveFlag_ADRDY(ADC1) == 0)
+	{
+	}
+	
+	
+	/* Start ADC group regular conversion */
+	LL_ADC_REG_StartConversion(ADC1);
+	while (LL_ADC_IsActiveFlag_EOC(ADC1) == 0)
+	{
+
+	}
+	/* Init variable containing ADC conversion data */
+	uhADCxConvertedData = VAR_CONVERTED_DATA_INIT_VALUE;
+	/* Retrieve ADC conversion data */
+	/* (data scale corresponds to ADC resolution: 12 bits) */
+	uhADCxConvertedData = LL_ADC_REG_ReadConversionData12(ADC1);
+	hADCxConvertedData_Temperature_DegreeCelsius = __LL_ADC_CALC_TEMPERATURE(VDDA_APPLI, uhADCxConvertedData, LL_ADC_RESOLUTION_12B);
 }
