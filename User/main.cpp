@@ -13,22 +13,32 @@ Copyright 2015 shentq. All Rights Reserved.
 请将PA0和PB6使用跳线链接起来
 */
 #include "ebox.h"
+#include "analog.h"
 
+Analog AD(&PA0);
+Analog AD2(&PA2);
 
 void setup()
 {
     ebox_init();
+    uart1.begin(115200);
     PA5.mode(OUTPUT_PP);
 }
 
 int main(void)
 {
-    setup();
-    while(1)
-    {
-      PA5.toggle();
-      delay_ms(5000);
-    }
+	__IO uint16_t i;
+	setup();
+	while (1)
+	{
+		i = AD2.read();
+    uart1.printf("PA0 = %d \r\n",i);
+//      i = PA2.pin;
+		i = AD.read();
+    uart1.printf("PA2 = %d \r\n",i);
+		PA5.toggle();
+		delay_ms(i);
+	}
 }
 
 
