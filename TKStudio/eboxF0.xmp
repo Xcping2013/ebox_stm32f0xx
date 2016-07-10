@@ -16,7 +16,6 @@
         <Filter Name="ebox">
             <File RelativePath="..\ebox\ebox.h" FileType="4" ro="0" bss="0" rw="0" />
             <File RelativePath="..\ebox\object.cpp" FileType="3" Output="object.o" ro="0" bss="0" rw="0" />
-            <File RelativePath="..\ebox\stm32f10x_conf.h" FileType="4" ro="0" bss="0" rw="0" />
             <Filter Name="core">
                 <File RelativePath="..\ebox\core\analog.cpp" FileType="3" Output="analog.o" ro="0" bss="0" rw="0" />
                 <File RelativePath="..\ebox\core\common.h" FileType="4" ro="0" bss="0" rw="0" />
@@ -25,6 +24,7 @@
                 <File RelativePath="..\ebox\core\digital.cpp" FileType="3" Output="digital.o" ro="0" bss="0" rw="0" />
                 <File RelativePath="..\ebox\core\ebox_it.cpp" FileType="3" Output="ebox_it.o" ro="0" bss="0" rw="0" />
                 <File RelativePath="..\ebox\core\sys.cpp" FileType="3" Output="sys.o" ro="0" bss="0" rw="0" />
+                <File RelativePath="..\ebox\core\analog.h" FileType="4" ro="0" bss="0" rw="0" />
             </Filter>
             <Filter Name="Peripherals">
                 <File RelativePath="..\ebox\Peripherals\CAN.cpp" FileType="3" Output="CAN.o" ro="0" bss="0" rw="0" />
