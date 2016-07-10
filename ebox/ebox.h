@@ -28,7 +28,7 @@ This specification is preliminary and is subject to change at any time without n
 //#include "in_capture.h"
 //#include "i2c.h"
 //#include "spi.h"
-//#include "uart.h"
+#include "uart.h"
 //#include "timer_one.h"
 //#include "rtc.h"
 //#include "iflash.h"
@@ -42,14 +42,14 @@ This specification is preliminary and is subject to change at any time without n
 ////////系统debug支持////////////////////////////////////////////////////////////////
 #define EBOX_DEBUG 1
 #if EBOX_DEBUG
-//extern USART uart1;//根据不同的串口名称此处需要做相应的修改
+extern USART uart1;//根据不同的串口名称此处需要做相应的修改
 #define DBG(...) uart1.printf(__VA_ARGS__)
 #else
 #define  DBG(...)
 #endif
 ////////////////////////////////////////////////////////////////////////////////
 //创建所有引脚对象和宏定义其指针
-//extern USART uart1;
+extern USART uart1;
 //extern USART uart2;
 //extern USART uart3;
 //extern USART uart4;
