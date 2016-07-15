@@ -199,18 +199,6 @@ __IO uint16_t uhADCxConvertedData_Voltage_mVolt = 0;  /* Value of voltage calcul
 //    return 0;
 //}
 
-/**
- *@name     uint16_t analog_read_voltage(GPIO *pin)
- *@brief    读取某个引脚上的模拟电压
- *@param    pin：ADC1某通道映射的引脚
- *@retval   如果引脚正确则返回该引脚的模拟电压值所对应的模拟电压，默认参考电压为3.3V
-            如果引脚错误返回0；
-*/
-//uint16_t analog_read_voltage(GPIO *pin)
-//{
-//    return (u16)(analog_read(pin) * 3300 / 4096); //求的结果扩大了1000倍，方便下面求出小数
-//}
-
 int adc_inited = 0;
 
 /**
@@ -227,9 +215,9 @@ void ADC1_init(uint32_t channel,GPIO *pin)
 	// adc_inited = 1;
 
 	// }
-  
-  
-	
+
+
+
 
 	/* Enable ADC clock (core clock) */
 	LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_ADC1);
@@ -250,7 +238,7 @@ void ADC1_init(uint32_t channel,GPIO *pin)
 		// wait_loop_index = ((LL_ADC_DELAY_TEMPSENSOR_STAB_US * (SystemCoreClock / (100000 * 2))) / 10);
 		// while (wait_loop_index != 0)
 		// {
-			// wait_loop_index--;
+		// wait_loop_index--;
 		// }
 
 	}
@@ -291,9 +279,6 @@ void ADC1_init(uint32_t channel,GPIO *pin)
 		/* Set ADC group regular continuous mode 一次触发按顺序转换序列中的一个通道*/
 //    LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_SINGLE);
 //    LL_ADC_REG_SetSequencerDiscont(ADC1, LL_ADC_REG_SEQ_DISCONT_1RANK );
-		/* Set ADC group regular sequence: channel on rank corresponding to channel number.  */
-		//LL_ADC_REG_SetSequencerChannels(ADC1, LL_ADC_CHANNEL_TEMPSENSOR);
-//		LL_ADC_REG_SetSequencerChannels(ADC1,LL_ADC_CHANNEL_0);
 	}
 
 	/*## Configuration of ADC hierarchical scope: channels #####################*/
@@ -326,36 +311,42 @@ void ADC1_init(uint32_t channel,GPIO *pin)
 
 }
 
+/**
+ *@name     uint16_t analog_read(uint32_t *channel)
+ *@brief    读取ADC1某个引脚上的模拟转换结果
+ *@param    channel：ADC1 通道
+ *@retval   如果引脚正确则返回该引脚的模拟电压值所对应的12bit的ADC转换结果
+            如果引脚错误返回0；
+*/
 uint16_t analogin_read(uint32_t *channel)
 {
-//	LL_ADC_Disable(ADC1);
 
 	LL_ADC_REG_SetSequencerChannels(ADC1, *channel);
 
-//	LL_ADC_Enable(ADC1);
-
 	LL_ADC_REG_StartConversion(ADC1);
 	while (LL_ADC_IsActiveFlag_EOC(ADC1) == 0)
 	{
 	}
-	/* Init variable containing ADC conversion data */
-	//uhADCxConvertedData = VAR_CONVERTED_DATA_INIT_VALUE;
-	/* Retrieve ADC conversion data */
-	/* (data scale corresponds to ADC resolution: 12 bits) */
-	uhADCxConvertedData = LL_ADC_REG_ReadConversionData12(ADC1);
-	//uhADCxConvertedData_Voltage_mVolt = __LL_ADC_CALC_DATA_TO_VOLTAGE(VDDA_APPLI,uhADCxConvertedData,LL_ADC_RESOLUTION_12B);
-	//LL_ADC_Disable(ADC1);
-	LL_ADC_REG_SetSequencerChannels(ADC1,LL_ADC_CHANNEL_VREFINT);
-//		LL_ADC_Enable(ADC1);
-	LL_ADC_REG_StartConversion(ADC1);
-	while (LL_ADC_IsActiveFlag_EOC(ADC1) == 0)
-	{
-	}
-	//__LL_ADC_CALC_VREFANALOG_VOLTAGE();
-	uhADCxConvertedData_Voltage_mVolt = LL_ADC_REG_ReadConversionData12(ADC1);
-	hADCxConvertedData_Temperature_DegreeCelsius = __LL_ADC_CALC_VREFANALOG_VOLTAGE(uhADCxConvertedData_Voltage_mVolt,LL_ADC_RESOLUTION_12B);
-	// uhADCxConvertedData_Voltage_mVolt = hADCxConvertedData_Temperature_DegreeCelsius * uhADCxConvertedData*1.0 / ll_adc_ca;
-	uhADCxConvertedData_Voltage_mVolt = __LL_ADC_CALC_DATA_TO_VOLTAGE(hADCxConvertedData_Temperature_DegreeCelsius,uhADCxConvertedData,LL_ADC_RESOLUTION_12B);
+//	uhADCxConvertedData = LL_ADC_REG_ReadConversionData12(ADC1);
 
-	return uhADCxConvertedData_Voltage_mVolt;
+//	LL_ADC_REG_SetSequencerChannels(ADC1,LL_ADC_CHANNEL_VREFINT);
+//	LL_ADC_REG_StartConversion(ADC1);
+//	while (LL_ADC_IsActiveFlag_EOC(ADC1) == 0)
+//	{
+//	}
+//	uhADCxConvertedData_Voltage_mVolt = LL_ADC_REG_ReadConversionData12(ADC1);
+//	hADCxConvertedData_Temperature_DegreeCelsius = __LL_ADC_CALC_VREFANALOG_VOLTAGE(uhADCxConvertedData_Voltage_mVolt,LL_ADC_RESOLUTION_12B);
+
+	return LL_ADC_REG_ReadConversionData12(ADC1);
+}
+
+/**
+ *@name     uint16_t analog_read_voltage(uint32_t *channel)
+ *@brief    读取某个引脚上的模拟电压
+ *@param    channel：ADC1引脚对应的通道
+ *@retval   如果引脚正确则返回该引脚的模拟电压值所对应的模拟电压，默认参考电压为3.3V
+            如果引脚错误返回0；
+*/
+uint16_t analogin_read_voltage(uint32_t *channel){
+	return __LL_ADC_CALC_DATA_TO_VOLTAGE(VDDA_APPLI,analogin_read(channel),LL_ADC_RESOLUTION_12B);
 }

@@ -17,6 +17,7 @@ Copyright 2015 shentq. All Rights Reserved.
 
 Analog AD(&PA0);
 Analog AD2(&PA2);
+Analog AD8(&PB0);
 
 void setup()
 {
@@ -32,10 +33,12 @@ int main(void)
 	while (1)
 	{
 		i = AD2.read();
-    uart1.printf("PA0 = %d \r\n",i);
+		uart1.printf("PA2 = %d \r\n",i);
+		i = AD8.read();
+		uart1.printf("PB8 = %d \r\n",i);
 //      i = PA2.pin;
-		i = AD.read();
-    uart1.printf("PA2 = %d \r\n",i);
+		i = AD.read_voltage();
+		uart1.printf("PA0 V = %d mv \r\n",i);
 		PA5.toggle();
 		delay_ms(i);
 	}
