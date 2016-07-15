@@ -13,7 +13,6 @@
     <tExt>*.txt; *.h; *.inc</tExt>
     <pExt>*.plm</pExt>
     <CppX>*.cpp</CppX>
-    <nMigrate>0</nMigrate>
   </Extensions>
 
   <DaveTm>
@@ -32,7 +31,6 @@
         <BeepAtEnd>1</BeepAtEnd>
         <RunSim>1</RunSim>
         <RunTarget>0</RunTarget>
-        <RunAbUc>0</RunAbUc>
       </OPTTT>
       <OPTHX>
         <HexSelection>1</HexSelection>
@@ -77,32 +75,22 @@
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
-      <CpuCode>18</CpuCode>
+      <CpuCode>255</CpuCode>
       <Books>
         <Book>
           <Number>0</Number>
-          <Title>User Manual (NUCLEO-F030R8)</Title>
-          <Path>D:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.4.0\Documents\DM00105823.pdf</Path>
+          <Title>Data Brief (STM32F030-Discovery)</Title>
+          <Path>D:\Program Files\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.4.0\Boards\ST\STM32F030-Discovery\Documents\DM00092305.pdf</Path>
         </Book>
         <Book>
           <Number>1</Number>
-          <Title>Overview (NUCLEO-F030R8)</Title>
-          <Path>D:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.4.0\Documents\DM00105918.pdf</Path>
+          <Title>Schematics (STM32F030-Discovery)</Title>
+          <Path>D:\Program Files\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.4.0\Boards\ST\STM32F030-Discovery\Documents\MB1134.pdf</Path>
         </Book>
         <Book>
           <Number>2</Number>
-          <Title>Getting started (NUCLEO-F030R8)</Title>
-          <Path>D:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.4.0\Documents\DM00105925.pdf</Path>
-        </Book>
-        <Book>
-          <Number>3</Number>
-          <Title>Schematics (NUCLEO-F030R8)</Title>
-          <Path>D:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.4.0\Documents\MB1136.pdf</Path>
-        </Book>
-        <Book>
-          <Number>4</Number>
-          <Title>STM32 Nucleo board (NUCLEO-F030R8)</Title>
-          <Path>http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF259997</Path>
+          <Title>STM32F030-Discovery Web Page (STM32F030-Discovery)</Title>
+          <Path>http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF259100</Path>
         </Book>
       </Books>
       <DebugOpt>
@@ -125,9 +113,10 @@
         <tRtrace>0</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
+        <tPdscDbg>1</tPdscDbg>
         <sRunDeb>0</sRunDeb>
         <sLrtime>1</sLrtime>
-        <nTsel>6</nTsel>
+        <nTsel>11</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -138,7 +127,7 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>Segger\JL2CM3.dll</pMon>
+        <pMon>STLink\ST-LINKIII-KEIL_SWO.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
@@ -164,7 +153,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>ST-LINKIII-KEIL_SWO</Key>
-          <Name>-U-O207 -O207 -S0 -C0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8004 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC800 -FN1 -FF0STM32F0xx_128.FLM -FS08000000 -FL020000 -FP0($$Device:STM32F072RB$Flash\STM32F0xx_128.FLM)</Name>
+          <Name>-U -O207 -S0 -C0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8004 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC800 -FN1 -FF0STM32F0xx_128.FLM -FS08000000 -FL020000 -FP0($$Device:STM32F072RB$Flash\STM32F0xx_128.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -186,22 +175,6 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>324</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134219448</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\ebox\core\analog.cpp</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\First\../ebox/core/analog.cpp\324</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
           <LineNumber>235</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134219268</Address>
@@ -214,6 +187,22 @@
           <Filename>..\ebox\core\analog.cpp</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\First\../ebox/core/analog.cpp\235</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>324</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\ebox\core\analog.cpp</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -264,7 +253,6 @@
       </DebugFlag>
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
-      <bLintAuto>0</bLintAuto>
       <SystemViewers>
         <Entry>
           <Name>System Viewer\ADC</Name>
