@@ -10,10 +10,12 @@ void SYSTEM::get_chip_info()
     flash_size = *(uint16_t *)(0x1FFFF7E0);   //–æ∆¨flash»›¡ø
 }
 extern uint16_t AD_value[];
+extern uint16_t analog_read_temperature(void);
 float SYSTEM::get_cpu_temperature()
 {
     float temp;
     //    temp = (1.43-(float)AD_value[15])/0.0043+25;
+    temp = analog_read_temperature();
     return (float)temp;
 
 }

@@ -17,7 +17,7 @@ This specification is preliminary and is subject to change at any time without n
 
 #include "common.h"
 
-extern void ADC1_init(uint32_t channel, GPIO *pin);
+extern void ADC1_init();
 extern uint16_t analogin_read(uint32_t *channel);
 extern uint16_t analogin_read_voltage(uint32_t *channel);
 
@@ -106,7 +106,7 @@ public:
 		default:
 			break;
 		}
-		ADC1_init(Channel, pin);
+		ADC1_init();
 	}
 
     /** Read the input voltage, represented as a float in the range [0.0, 1.0]

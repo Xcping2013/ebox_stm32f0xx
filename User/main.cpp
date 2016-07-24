@@ -17,7 +17,7 @@ Copyright 2015 shentq. All Rights Reserved.
 
 Analog AD(&PA0);
 Analog AD2(&PA2);
-Analog AD8(&PB0);
+Analog AD8(&PB1);
 EBOX_IWDG ewwd;
 
 void setup()
@@ -26,7 +26,8 @@ void setup()
     uart1.begin(115200);
     uart1.printf("begin \r\n");
     PA5.mode(OUTPUT_PP);
-    ewwd.begin(1000);
+//    ewwd.begin(36208);
+    
 }
 
 int main(void)
@@ -43,9 +44,10 @@ int main(void)
 //      i = PA2.pin;
 		i = AD.read_voltage();
 		uart1.printf("PA0 V = %d mv \r\n",i);
-		ewwd.feed();
+//		ewwd.feed();
 		PA5.toggle();
 		delay_ms(i);
+    uart1.printf("cpu temperature: %f \r\n",sys.get_cpu_temperature());
 	}
 }
 
