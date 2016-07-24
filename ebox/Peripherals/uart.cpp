@@ -17,8 +17,14 @@
 
 #define uart_tx_length   100
 uint8_t uart_tx_buf[uart_tx_length];
+
+#if (defined(STM32F030x6)||defined(STM32F031x6))
+volatile uint8_t busy[1];
+callback_fun_type usart_callback_table[1][2];//支持串口的rx中断
+#else
 volatile uint8_t busy[5];
 callback_fun_type usart_callback_table[5][2];//支持串口的rx中断
+#endif
 
 /**
  *@name     USART::USART(USART_TypeDef *USARTx,GPIO *tx_pin,GPIO *rx_pin)
@@ -74,7 +80,7 @@ void USART::begin(uint32_t baud_rate,uint8_t use_dma)
            dma                 = DMA1;
            dma_channel         = LL_DMA_CHANNEL_2;
        break;
-       
+#if !(defined(STM32F030x6)||defined(STM32F031x6))  
        case (uint32_t)USART2_BASE:
 		   // GPIO Parameter
            gpio_af_usart       = LL_GPIO_AF_1;
@@ -88,7 +94,7 @@ void USART::begin(uint32_t baud_rate,uint8_t use_dma)
            dma                 = DMA1;
            dma_channel         = LL_DMA_CHANNEL_4;
        break;
-   
+#endif   
    }               
     usart_config(baud_rate);
     if(this->use_dma == 1)
@@ -182,12 +188,15 @@ void USART::attach_rx_interrupt(void (*callback_fun)(void))
 	case (uint32_t)USART1_BASE:
 		usart_callback_table[0][0] = callback_fun;
 		break;
+#if !(defined(STM32F030x6)||defined(STM32F031x6))
 	case (uint32_t)USART2_BASE:
 		usart_callback_table[1][0] = callback_fun;
 		break;
+
 	case (uint32_t)USART3_BASE:
 		usart_callback_table[2][0] = callback_fun;
 		break;
+#endif
 }
 	/* (2) ENABLE USART RXNE interrupts */
 	LL_USART_EnableIT_RXNE(USARTx);
@@ -207,12 +216,14 @@ void USART::attach_tx_interrupt(void (*callback_fun)(void))
 	case (uint32_t)USART1_BASE:
 		usart_callback_table[0][1] = callback_fun;
 		break;
+#if !(defined(STM32F030x6)||defined(STM32F031x6))
 	case (uint32_t)USART2_BASE:
 		usart_callback_table[1][1] = callback_fun;
 		break;
 	case (uint32_t)USART3_BASE:
 		usart_callback_table[2][1] = callback_fun;
 		break;
+#endif
 	}
 }
 /**
@@ -366,12 +377,14 @@ void USART::wait_busy()
 	case (uint32_t)USART1_BASE:
 		while (busy[0] == 1);
 		break;
+#if !(defined(STM32F030x6)||defined(STM32F031x6))
 	case (uint32_t)USART2_BASE:
 		while (busy[1] == 1);
 		break;
 	case (uint32_t)USART3_BASE:
 		while (busy[2] == 1);
 		break;
+#endif
 //    case (uint32_t)UART4_BASE:
 //        while(busy[3] == 1);
 //        break;
@@ -395,12 +408,14 @@ void USART::set_busy()
 	case (uint32_t)USART1_BASE:
 		busy[0] = 1;
 		break;
+#if !(defined(STM32F030x6)||defined(STM32F031x6))
 	case (uint32_t)USART2_BASE:
 		busy[1] = 1;
 		break;
 	case (uint32_t)USART3_BASE:
 		busy[2] = 1;
 		break;
+#endif
 //    case (uint32_t)UART4_BASE:
 //        busy[3] = 1;
 //        break;
@@ -436,6 +451,7 @@ extern "C" {
 		}
 	}
 
+#if !(defined(STM32F030x6)||defined(STM32F031x6))
 	void USART2_IRQHandler(void)
 	{
 		if (LL_USART_IsActiveFlag_RXNE(USART2) == SET )
@@ -460,4 +476,5 @@ extern "C" {
 			LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_4);
 		}
 	}
+#endif
 }
