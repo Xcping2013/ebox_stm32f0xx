@@ -207,29 +207,6 @@ __IO uint16_t uhADCxConvertedData_Voltage_mVolt = 0;  /* Value of voltage calcul
 */
 void ADC1_init()
 {
-			/* Enable ADC clock (core clock) */
-		LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_ADC1);
-	if (__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE() == 0)
-	{
-		/* Set ADC clock (conversion clock) common to several ADC instances */
-		/* Note: On this STM32 serie, ADC common clock asynchonous prescaler      */
-		/*       is applied to each ADC instance if ADC instance clock is         */
-		/*       set to clock source asynchronous                                 */
-		/*       (refer to function "LL_ADC_SetClock()" below).                   */
-		// LL_ADC_SetCommonClock(__LL_ADC_COMMON_INSTANCE(ADC1), LL_ADC_CLOCK_ASYNC_DIV1);
-
-		/* Set ADC measurement path to internal channels */
-		LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(ADC1), LL_ADC_PATH_INTERNAL_TEMPSENSOR);
-		LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(ADC1), LL_ADC_PATH_INTERNAL_VREFINT);
-		/* Delay for ADC temperature sensor stabilization time.                   */
-		// wait_loop_index = ((LL_ADC_DELAY_TEMPSENSOR_STAB_US * (SystemCoreClock / (100000 * 2))) / 10);
-		// while (wait_loop_index != 0)
-		// {
-		// wait_loop_index--;
-		// }
-
-	}
-
 	/*## Configuration of ADC hierarchical scope: ADC instance #################*/
 	/*       ADC must be disabled.                                              */
 	if (LL_ADC_IsEnabled(ADC1) == 0)
@@ -269,6 +246,12 @@ void ADC1_init()
 		/*       of the entire ADC instance.                                      */
 		/*       See sampling time configured above, at ADC instance scope.       */
 		LL_ADC_SetSamplingTimeCommonChannels(ADC1, LL_ADC_SAMPLINGTIME_239CYCLES_5);
+	}
+  
+  	if (__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE() == 0)
+	{
+		/* Set ADC measurement path to internal channels */
+		LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(ADC1), LL_ADC_PATH_INTERNAL_TEMPSENSOR|LL_ADC_PATH_INTERNAL_VREFINT);
 	}
 
 	if (LL_ADC_IsEnabled(ADC1) == 0)
@@ -330,14 +313,14 @@ uint16_t analogin_read_voltage(uint32_t *channel){
 	return __LL_ADC_CALC_DATA_TO_VOLTAGE(VDDA_APPLI,analogin_read(channel),LL_ADC_RESOLUTION_12B);
 }
 
+/**
+ *@name     uint16_t analog_read_temperature(void)
+ *@brief    读取内部温度传感器
+ *@param    void
+ *@retval   温度值
+*/
 uint16_t analog_read_temperature(void){
-//	LL_ADC_REG_SetSequencerChannels(ADC1, LL_ADC_CHANNEL_TEMPSENSOR);
-
-//	LL_ADC_REG_StartConversion(ADC1);
-//	while (LL_ADC_IsActiveFlag_EOC(ADC1) == 0)
-//	{
-//	}
-//	uhADCxConvertedData = LL_ADC_REG_ReadConversionData12(ADC1);
-//	hADCxConvertedData_Temperature_DegreeCelsius = __LL_ADC_CALC_TEMPERATURE(VDDA_APPLI,uhADCxConvertedData,uhADCxConvertedData_Voltage_mVolt);
-	return __LL_ADC_CALC_TEMPERATURE(VDDA_APPLI,analogin_read((uint32_t *)LL_ADC_CHANNEL_16),LL_ADC_RESOLUTION_12B);
+	uint32_t  channel;
+	channel = LL_ADC_CHANNEL_TEMPSENSOR;
+	return __LL_ADC_CALC_TEMPERATURE(VDDA_APPLI,analogin_read(&channel),LL_ADC_RESOLUTION_12B);
 }
