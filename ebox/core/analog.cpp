@@ -20,7 +20,7 @@ This specification is preliminary and is subject to change at any time without n
 //默认开启16通道 采用DMA+ADC连续转换模式。提供AD采集服务
 //只需将IO设置为AIN模式即可读取引脚相应的电压
 #define CH 16
-//u16  AD_value[CH];   //用来存放ADC转换结果，也是DMA的目标地址
+uint16_t  AD_value[CH];   //用来存放ADC转换结果，也是DMA的目标地址
 
 /* Definitions of environment analog values */
 /* Value of analog reference voltage (Vref+), connected to analog voltage   */
@@ -101,8 +101,8 @@ __IO uint16_t uhADCxConvertedData_Voltage_mVolt = 0;  /* Value of voltage calcul
  *@param    NONE
  *@retval   NONE
 */
-//void DMA_configuration(void)
-//{
+void DMA_configuration(void)
+{
 //    /* ADC1  DMA1 Channel Config */
 //    DMA_InitTypeDef DMA_InitStructure;
 //    DMA_DeInit(DMA1_Channel1);   //将DMA的通道1寄存器重设为缺省值
@@ -118,8 +118,59 @@ __IO uint16_t uhADCxConvertedData_Voltage_mVolt = 0;  /* Value of voltage calcul
 //    DMA_InitStructure.DMA_Priority = DMA_Priority_High; //DMA通道 x拥有高优先级
 //    DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;  //DMA通道x没有设置为内存到内存传输
 //    DMA_Init(DMA1_Channel1, &DMA_InitStructure);  //根据DMA_InitStruct中指定的参数初始化DMA的通道
-
-//}
+  /*## Configuration of NVIC #################################################*/
+  /* Configure NVIC to enable DMA interruptions */
+  NVIC_SetPriority(DMA1_Channel1_IRQn, 1); /* DMA IRQ lower priority than ADC IRQ */
+  NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  
+  /*## Configuration of DMA ##################################################*/
+  /* Enable the peripheral clock of DMA */
+  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
+  
+  /* Configure the DMA transfer */
+  /*  - DMA transfer in circular mode to match with ADC configuration:        */
+  /*    DMA unlimited requests.                                               */
+  /*  - DMA transfer from ADC without address increment.                      */
+  /*  - DMA transfer to memory with address increment.                        */
+  /*  - DMA transfer from ADC by half-word to match with ADC configuration:   */
+  /*    ADC resolution 12 bits.                                               */
+  /*  - DMA transfer to memory by half-word to match with ADC conversion data */
+  /*    buffer variable type: half-word.                                      */
+  LL_DMA_ConfigTransfer(DMA1,
+                        LL_DMA_CHANNEL_1,
+                        LL_DMA_DIRECTION_PERIPH_TO_MEMORY |
+                        LL_DMA_MODE_NORMAL              |
+                        LL_DMA_PERIPH_NOINCREMENT         |
+                        LL_DMA_MEMORY_INCREMENT           |
+                        LL_DMA_PDATAALIGN_HALFWORD        |
+                        LL_DMA_MDATAALIGN_HALFWORD        |
+                        LL_DMA_PRIORITY_HIGH               );
+  
+  /* Set DMA transfer addresses of source and destination */
+  LL_DMA_ConfigAddresses(DMA1,LL_DMA_CHANNEL_1,LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA),
+                         (uint32_t)&AD_value,
+                         LL_DMA_DIRECTION_PERIPH_TO_MEMORY);
+  
+  /* Set DMA transfer size */
+  LL_DMA_SetDataLength(DMA1,LL_DMA_CHANNEL_1,CH);
+  
+//  /* Enable DMA transfer interruption: transfer complete */
+//  LL_DMA_EnableIT_TC(DMA1,
+//                     LL_DMA_CHANNEL_1);
+//  
+//  /* Enable DMA transfer interruption: half transfer */
+//  LL_DMA_EnableIT_HT(DMA1,
+//                     LL_DMA_CHANNEL_1);
+//  
+//  /* Enable DMA transfer interruption: transfer error */
+//  LL_DMA_EnableIT_TE(DMA1,
+//                     LL_DMA_CHANNEL_1);
+  
+  /*## Activation of DMA #####################################################*/
+  /* Enable the DMA transfer */
+  LL_DMA_EnableChannel(DMA1,LL_DMA_CHANNEL_1);
+  LL_ADC_REG_SetDMATransfer(ADC1,LL_ADC_REG_DMA_TRANSFER_UNLIMITED);
+}
 
 /**
  *@name     void ADC1_init(void)
@@ -234,7 +285,8 @@ void ADC1_init()
 
 		/* Set ADC group regular sequencer */
 		/* Set ADC group regular continuous mode 一次触发转换序列中的所有通道*/
-		LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_SINGLE);
+//    	LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_SINGLE)
+		LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_CONTINUOUS);
 		LL_ADC_REG_SetSequencerDiscont(ADC1, LL_ADC_REG_SEQ_DISCONT_DISABLE);
 
 		/* Set ADC group regular continuous mode 一次触发按顺序转换序列中的一个通道*/
@@ -269,7 +321,7 @@ void ADC1_init()
 	while (LL_ADC_IsActiveFlag_ADRDY(ADC1) == 0)
 	{
 	}
-
+DMA_configuration();
 }
 
 /**
@@ -281,9 +333,11 @@ void ADC1_init()
 */
 uint16_t analogin_read(uint32_t *channel)
 {
+	LL_DMA_DisableChannel(DMA1,LL_DMA_CHANNEL_1);
 
 	LL_ADC_REG_SetSequencerChannels(ADC1, *channel);
-
+	
+	LL_DMA_EnableChannel(DMA1,LL_DMA_CHANNEL_1);
 	LL_ADC_REG_StartConversion(ADC1);
 	while (LL_ADC_IsActiveFlag_EOC(ADC1) == 0)
 	{
