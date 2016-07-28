@@ -164,65 +164,6 @@ void DMA_configuration(void)
 //    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
 //    DMA_Cmd(DMA1_Channel1, ENABLE);	 //启动DMA通道
 //}
-/**
- *@name     uint16_t analog_read(GPIO *pin)
- *@brief    读取ADC1某个引脚上的模拟转换结果
- *@param    pin：ADC1某通道映射的引脚
- *@retval   如果引脚正确则返回该引脚的模拟电压值所对应的10bit的ADC转换结果
-            如果引脚错误返回0；
-*/
-//uint16_t analog_read(GPIO *pin)
-//{
-//    switch((uint32_t)pin->port)
-//    {
-//    case  (uint32_t)GPIOA_BASE:
-//        switch(pin->pin)
-//        {
-//        case GPIO_Pin_0:
-//            return AD_value[0];
-//        case GPIO_Pin_1:
-//            return AD_value[1];
-//        case GPIO_Pin_2:
-//            return AD_value[2];
-//        case GPIO_Pin_3:
-//            return AD_value[3];
-//        case GPIO_Pin_4:
-//            return AD_value[4];
-//        case GPIO_Pin_5:
-//            return AD_value[5];
-//        case GPIO_Pin_6:
-//            return AD_value[6];
-//        case GPIO_Pin_7:
-//            return AD_value[7];
-//        }
-//    case (uint32_t)GPIOB_BASE:
-//        switch(pin->pin)
-//        {
-//        case GPIO_Pin_0:
-//            return AD_value[8];
-//        case GPIO_Pin_1:
-//            return AD_value[9];
-//        }
-//    case (uint32_t)GPIOC_BASE:
-//        switch(pin->pin)
-//        {
-//        case GPIO_Pin_0:
-//            return AD_value[10];
-//        case GPIO_Pin_1:
-//            return AD_value[11];
-//        case GPIO_Pin_2:
-//            return AD_value[12];
-//        case GPIO_Pin_3:
-//            return AD_value[13];
-//        case GPIO_Pin_4:
-//            return AD_value[14];
-//        case GPIO_Pin_5:
-//            return AD_value[15];
-//        }
-//    }
-
-//    return 0;
-//}
 
 /**
  *@name     void ADC1_init(void)
@@ -230,7 +171,7 @@ void DMA_configuration(void)
  *@param    NONE
  *@retval   NONE
 */
-void ADC1_init()
+void ADC1_init(uint32_t mode)
 {
 	/*## Configuration of ADC hierarchical scope: ADC instance #################*/
 	/*       ADC must be disabled.                                              */
@@ -259,7 +200,7 @@ void ADC1_init()
 
 		/* Set ADC group regular sequencer */
 		/* Set ADC group regular continuous mode 一次触发转换序列中的所有通道*/
-    	LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_SINGLE);
+//    	LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_SINGLE);
 //		LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_CONTINUOUS);
 		LL_ADC_REG_SetSequencerDiscont(ADC1, LL_ADC_REG_SEQ_DISCONT_DISABLE);
 
@@ -273,6 +214,8 @@ void ADC1_init()
 		/*       See sampling time configured above, at ADC instance scope.       */
 		LL_ADC_SetSamplingTimeCommonChannels(ADC1, LL_ADC_SAMPLINGTIME_239CYCLES_5);
 	}
+	
+	//LL_ADC_REG_SetContinuousMode(ADC1, mode);
   
   	if (__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE() == 0)
 	{
@@ -294,7 +237,6 @@ void ADC1_init()
 		{
 		}
 	}
-    //DMA_configuration();
 }
 
 /**
@@ -306,11 +248,11 @@ void ADC1_init()
 */
 uint16_t analogin_read(uint32_t *channel)
 {
-//	LL_ADC_ClearFlag_EOS(ADC1);
+	LL_DMA_DisableChannel(DMA1,LL_DMA_CHANNEL_1);	
+	LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_SINGLE);
 	LL_ADC_REG_SetSequencerChannels(ADC1, *channel);
-
+	
 	LL_ADC_REG_StartConversion(ADC1);
-//	while (!LL_ADC_IsActiveFlag_EOS(ADC1));
 	while (!LL_ADC_IsActiveFlag_EOC(ADC1));
 //	LL_ADC_REG_SetSequencerChannels(ADC1,LL_ADC_CHANNEL_VREFINT);
 //	LL_ADC_REG_StartConversion(ADC1);
@@ -322,8 +264,30 @@ uint16_t analogin_read(uint32_t *channel)
 //
 //  return hADCxConvertedData_Temperature_DegreeCelsius;
 	return LL_ADC_REG_ReadConversionData12(ADC1);
-//		AD_value[4] = (AD_value[5] + AD_value[6])/2;
-	//return AD_value[0];
+}
+
+uint16_t analogin_read(uint32_t *channel,uint16_t *buffer, uint16_t size)
+{
+	LL_ADC_REG_SetContinuousMode(ADC1, LL_ADC_REG_CONV_CONTINUOUS);
+	//LL_ADC_REG_SetDMATransfer(ADC1,LL_ADC_REG_DMA_TRANSFER_LIMITED);
+	DMA_configuration();
+	LL_DMA_DisableChannel(DMA1,LL_DMA_CHANNEL_1);
+	/* Set DMA transfer addresses of source and destination */
+	LL_DMA_ConfigAddresses(DMA1,LL_DMA_CHANNEL_1,LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA),
+	                       (uint32_t)buffer,
+	                       LL_DMA_DIRECTION_PERIPH_TO_MEMORY);
+	/* Set DMA transfer size */
+	LL_DMA_SetDataLength(DMA1,LL_DMA_CHANNEL_1,size);
+
+	/* Enable the DMA transfer */
+	LL_DMA_EnableChannel(DMA1,LL_DMA_CHANNEL_1);
+
+	LL_ADC_ClearFlag_EOS(ADC1);
+	LL_ADC_REG_SetSequencerChannels(ADC1, *channel);
+
+	LL_ADC_REG_StartConversion(ADC1);
+	while (!LL_ADC_IsActiveFlag_EOS(ADC1));
+	return 0;
 }
 
 /**
