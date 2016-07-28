@@ -18,10 +18,12 @@ This specification is preliminary and is subject to change at any time without n
 #include "common.h"
 #include "stdlib.h"
 
-extern void ADC1_init(uint32_t mode);
+extern void ADC1_init(void);
 extern uint16_t analogin_read(uint32_t *channel);
-extern uint16_t analogin_read(uint32_t *channel,uint16_t *buffer, uint16_t size);
+extern void analogin_read(uint32_t *channel,uint16_t *buffer, uint16_t size);
 extern uint16_t analogin_read_voltage(uint32_t *channel);
+extern void DMA_configuration(void);
+extern uint16_t analog_read_temperature(void);
 
 class Analog{
 public:
@@ -107,7 +109,7 @@ public:
 		default:
 			break;
 		}
-		ADC1_init(LL_ADC_REG_CONV_SINGLE);
+		ADC1_init();
 	}
 
     /** Read the input voltage, represented as a float in the range [0.0, 1.0]
@@ -131,20 +133,20 @@ private:
 	uint32_t Channel;	
 };
 
-class AnalogS{
+
+class AnalogDMA{
 public:
-	/** Create an AnalogIn, connected to the specified pin
-	 *
-	 * @param pin AnalogIn pin to connect to
-	 * @param name (optional) A string to identify the object
+	/** DMA模式采集ADC数据， unit为采集的组数。DMA的实际长度 = 通道数 * 组数
 	 */
-	AnalogS(uint16_t unit)
+	AnalogDMA(uint16_t unit)
 	{
 		UnitNum = unit;
 		BufferSize = 0;
+		ADC1_init();
+		DMA_configuration();
 	}
 
-	void AnalogS_Add(GPIO *pin) {
+	void Add(GPIO *pin) {
 		pin->mode(AIN);
 		ChannelNum ++;
 		switch ((uint32_t)pin->port)
@@ -222,16 +224,14 @@ public:
 			ChannelNum --;
 			break;
 		}
-		ADC1_init(LL_ADC_REG_CONV_CONTINUOUS);
+		
 		free(Buffer);
 		BufferSize = ChannelNum*UnitNum;
 		Buffer = (uint16_t*)malloc(BufferSize);
 
 	}
 
-	/** Read the input voltage, represented as a float in the range [0.0, 1.0]
-	 *
-	 * @returns A floating-point value representing the current input voltage, measured as a percentage
+	/** 读取指定组ADC值
 	 */
 	uint16_t read() {
 		if (BufferSize == 0)
@@ -241,13 +241,15 @@ public:
 		analogin_read( &Channel,Buffer,BufferSize);
 		return  1;
 	}
-
+  
+ /** ADC转换结果
+	 */
 	uint16_t *Buffer;		// 保存都取结果
+  uint32_t BufferSize;
 private:
 	uint32_t Channel;			// 要读取的通道
 	uint16_t ChannelNum;	// 要读取的通道数
-	uint16_t UnitNum ;		// 读几组数据
-	uint32_t BufferSize;
+	uint16_t UnitNum ;		// 读几组数据	
 };
 
 #endif
