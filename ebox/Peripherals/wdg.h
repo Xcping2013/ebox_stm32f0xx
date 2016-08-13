@@ -3,7 +3,7 @@ file   : wdg.h
 author : shentq
 version: V1.1
 date   : 2016/4/6
-
+date   : 2016/7/24 LQM移植到STM32F0平台,使用HAL库LL层
 Copyright 2015 shentq. All Rights Reserved.
 
 Copyright Notice
@@ -24,7 +24,7 @@ This specification is preliminary and is subject to change at any time without n
  * rlr:重装载寄存器值:低 11 位有效.
  * 时间计算(大概):Tout=((4*2^prer)*rlr)/40 (ms).
    本函数内部已经做了相关计算；
-    输入参数为ms；1000代表1000ms；请在1s内喂一次狗。否则将会复位
+   输入参数为ms；1000代表1000ms；请在1s内喂一次狗。否则将会复位 最大26.2s
  */
 class EBOX_IWDG
 {

@@ -39,6 +39,7 @@ extern "C" {
 #include "stm32f0xx_ll_pwr.h"
 #include "stm32f0xx_ll_tim.h"
 #include "stm32f0xx_ll_adc.h"
+#include "stm32f0xx_ll_iwdg.h"
 #if defined(USE_FULL_ASSERT)
 #include "stm32_assert.h"
 #endif /* USE_FULL_ASSERT */ 

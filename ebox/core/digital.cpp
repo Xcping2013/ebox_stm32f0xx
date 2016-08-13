@@ -54,15 +54,15 @@ void GPIO::mode(PIN_MODE mode, uint8_t af_configration)
 	case (uint32_t)GPIOD_BASE:
 		LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOD);
 		break;
+#if !(defined(STM32F030x6)||defined(STM32F031x6))
 	case (uint32_t)GPIOE_BASE:
 		LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOE);
 		break;
+#endif
 	case (uint32_t)GPIOF_BASE:
 		LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOF);
 		break;
 	}
-//    if(mode == AF_OD || mode == AF_PP)
-//        RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE); //
 
 	switch ((uint8_t)mode)
 	{

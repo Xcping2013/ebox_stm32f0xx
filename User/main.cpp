@@ -8,22 +8,30 @@ Copyright 2015 shentq. All Rights Reserved.
 */
 
 /*
-输入捕获实验-测量周期和频率
-本例程为使用输入捕获模式测量一个PWM信号的周期和频率
-请将PA0和PB6使用跳线链接起来
+ADC测试
 */
 #include "ebox.h"
-#include "analog.h"
+
 
 Analog AD(&PA0);
 Analog AD2(&PA2);
-Analog AD8(&PB0);
+Analog AD8(&PB1);
+
+// DMA模式采集
+AnalogDMA ADINS(5);
+
 
 void setup()
 {
-    ebox_init();
-    uart1.begin(115200);
-    PA5.mode(OUTPUT_PP);
+	ebox_init();
+	uart1.begin(115200);
+	uart1.printf("begin \r\n");
+	PA5.mode(OUTPUT_PP);
+//    ewwd.begin(36208);
+  // DMA模式下添加需要采集的通道。采集结果按照ADC通道从低到高排列，和加入顺序无关
+	ADINS.Add(&PA0);
+	ADINS.Add(&PA2);
+	ADINS.Add(&PA1);
 }
 
 int main(void)
@@ -32,15 +40,19 @@ int main(void)
 	setup();
 	while (1)
 	{
-		i = AD2.read();
-		uart1.printf("PA2 = %d \r\n",i);
+		i = AD.read();
+		uart1.printf("PA2 = %d ---",i);
+		ADINS.read();
+		uart1.printf("DMA = %d %d %d %d %d ---",ADINS.Buffer[0],ADINS.Buffer[1],ADINS.Buffer[2],ADINS.Buffer[3],ADINS.Buffer[4]);
+	
 		i = AD8.read();
-		uart1.printf("PB8 = %d \r\n",i);
-//      i = PA2.pin;
+		uart1.printf("PB8 = %d ---",i);
+
 		i = AD.read_voltage();
-		uart1.printf("PA0 V = %d mv \r\n",i);
+		uart1.printf("PA0 V = %d mv ---",i);
 		PA5.toggle();
-		delay_ms(i);
+		delay_ms(3000);
+		uart1.printf("cpu temperature: %.2f \r\n",sys.get_cpu_temperature());
 	}
 }
 

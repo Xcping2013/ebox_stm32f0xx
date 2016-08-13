@@ -33,7 +33,8 @@ This specification is preliminary and is subject to change at any time without n
 //#include "rtc.h"
 //#include "iflash.h"
 //#include "dac.h"
-//#include "wdg.h"
+#include "wdg.h"
+#include "analog.h"
 
 #include "stdio.h"
 
