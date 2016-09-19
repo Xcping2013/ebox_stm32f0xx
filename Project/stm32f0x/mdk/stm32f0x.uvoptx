@@ -81,28 +81,8 @@
       <Books>
         <Book>
           <Number>0</Number>
-          <Title>User Manual (NUCLEO-F072RB)</Title>
-          <Path>D:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.4.0\Documents\DM00105823.pdf</Path>
-        </Book>
-        <Book>
-          <Number>1</Number>
-          <Title>Overview (NUCLEO-F072RB)</Title>
-          <Path>D:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.4.0\Documents\DM00105918.pdf</Path>
-        </Book>
-        <Book>
-          <Number>2</Number>
-          <Title>Getting started (NUCLEO-F072RB)</Title>
-          <Path>D:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.4.0\Documents\DM00105925.pdf</Path>
-        </Book>
-        <Book>
-          <Number>3</Number>
-          <Title>Schematics (NUCLEO-F072RB)</Title>
-          <Path>D:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.4.0\Documents\MB1136.pdf</Path>
-        </Book>
-        <Book>
-          <Number>4</Number>
-          <Title>STM32 Nucleo board (NUCLEO-F072RB)</Title>
-          <Path>http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF260003</Path>
+          <Title>STM32F0-Discovery Web Page (STM32F0-Discovery)</Title>
+          <Path>http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF253215</Path>
         </Book>
       </Books>
       <DebugOpt>
@@ -127,7 +107,7 @@
         <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
-        <nTsel>6</nTsel>
+        <nTsel>3</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -144,10 +124,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-<<<<<<< HEAD:Project/First.uvoptx
-=======
           <Name>(105=-1,-1,-1,-1,0)</Name>
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271:Project/stm32f0x/mdk/stm32f0x.uvoptx
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -161,13 +138,8 @@
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-<<<<<<< HEAD:Project/First.uvoptx
-          <Key>ST-LINKIII-KEIL_SWO</Key>
-          <Name>-U -O207 -S0 -C0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8004 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC800 -FN1 -FF0STM32F0xx_128.FLM -FS08000000 -FL020000 -FP0($$Device:STM32F072RB$Flash\STM32F0xx_128.FLM)</Name>
-=======
           <Key>ARMRTXEVENTFLAGS</Key>
           <Name>-L70 -Z18 -C0 -M0 -T1</Name>
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271:Project/stm32f0x/mdk/stm32f0x.uvoptx
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -194,15 +166,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-<<<<<<< HEAD:Project/First.uvoptx
-          <LineNumber>204</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134225652</Address>
-=======
           <LineNumber>364</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134225136</Address>
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271:Project/stm32f0x/mdk/stm32f0x.uvoptx
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -211,20 +177,11 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\..\..\mcu\stm32f0x\ebox\Peripherals\exti.cpp</Filename>
           <ExecCommand></ExecCommand>
-<<<<<<< HEAD:Project/First.uvoptx
-          <Expression>\\First\../ebox/core/analog.cpp\204</Expression>
-=======
           <Expression></Expression>
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271:Project/stm32f0x/mdk/stm32f0x.uvoptx
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-<<<<<<< HEAD:Project/First.uvoptx
-          <LineNumber>210</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134225670</Address>
-=======
           <LineNumber>341</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134231142</Address>
@@ -244,7 +201,6 @@
           <LineNumber>263</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134230562</Address>
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271:Project/stm32f0x/mdk/stm32f0x.uvoptx
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -285,55 +241,24 @@
           <BreakIfRCount>0</BreakIfRCount>
           <Filename>..\..\..\mcu\stm32f0x\ebox\Peripherals\uart.cpp</Filename>
           <ExecCommand></ExecCommand>
-<<<<<<< HEAD:Project/First.uvoptx
-          <Expression>\\First\../ebox/core/analog.cpp\210</Expression>
-=======
           <Expression></Expression>
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271:Project/stm32f0x/mdk/stm32f0x.uvoptx
         </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-<<<<<<< HEAD:Project/First.uvoptx
-          <ItemText>AD_value,0x0A</ItemText>
-=======
           <ItemText>time</ItemText>
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271:Project/stm32f0x/mdk/stm32f0x.uvoptx
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-<<<<<<< HEAD:Project/First.uvoptx
-          <ItemText>i,0x0A</ItemText>
-=======
           <ItemText>AdcS.Buffer,0x0A</ItemText>
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271:Project/stm32f0x/mdk/stm32f0x.uvoptx
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-<<<<<<< HEAD:Project/First.uvoptx
-          <ItemText>ADINS.Buffer[0],0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>3</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>ADINS.Buffer[1],0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>ADINS.Buffer[2],0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>ADINS.Buffer[4],0x0A</ItemText>
-=======
           <ItemText>send_buf</ItemText>
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271:Project/stm32f0x/mdk/stm32f0x.uvoptx
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
@@ -376,6 +301,9 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
+      <Lin2Executable></Lin2Executable>
+      <Lin2ConfigFile></Lin2ConfigFile>
+      <bLin2Auto>0</bLin2Auto>
       <SystemViewers>
         <Entry>
           <Name>System Viewer\RCC</Name>
@@ -386,11 +314,7 @@
           <WinId>35904</WinId>
         </Entry>
         <Entry>
-<<<<<<< HEAD:Project/First.uvoptx
-          <Name>System Viewer\DMA</Name>
-=======
           <Name>System Viewer\USART2</Name>
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271:Project/stm32f0x/mdk/stm32f0x.uvoptx
           <WinId>35905</WinId>
         </Entry>
       </SystemViewers>
@@ -408,7 +332,6 @@
       <FileNumber>1</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f030xc.s</PathWithFileName>
@@ -421,7 +344,6 @@
       <FileNumber>2</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f030x6.s</PathWithFileName>
@@ -434,7 +356,6 @@
       <FileNumber>3</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f030x8.s</PathWithFileName>
@@ -447,7 +368,6 @@
       <FileNumber>4</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f031x6.s</PathWithFileName>
@@ -460,7 +380,6 @@
       <FileNumber>5</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f038xx.s</PathWithFileName>
@@ -473,7 +392,6 @@
       <FileNumber>6</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f042x6.s</PathWithFileName>
@@ -486,7 +404,6 @@
       <FileNumber>7</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f048xx.s</PathWithFileName>
@@ -499,7 +416,6 @@
       <FileNumber>8</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f051x8.s</PathWithFileName>
@@ -512,7 +428,6 @@
       <FileNumber>9</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f058xx.s</PathWithFileName>
@@ -525,7 +440,6 @@
       <FileNumber>10</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f070x6.s</PathWithFileName>
@@ -538,7 +452,6 @@
       <FileNumber>11</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f070xb.s</PathWithFileName>
@@ -551,7 +464,6 @@
       <FileNumber>12</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f071xb.s</PathWithFileName>
@@ -564,7 +476,6 @@
       <FileNumber>13</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f072xb.s</PathWithFileName>
@@ -577,7 +488,6 @@
       <FileNumber>14</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f078xx.s</PathWithFileName>
@@ -590,7 +500,6 @@
       <FileNumber>15</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f091xc.s</PathWithFileName>
@@ -603,7 +512,6 @@
       <FileNumber>16</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f098xx.s</PathWithFileName>
@@ -624,7 +532,6 @@
       <FileNumber>17</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\CMSIS\Device\ST\STM32F0xx\Source\Templates\system_stm32f0xx.c</PathWithFileName>
@@ -645,7 +552,6 @@
       <FileNumber>18</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\STM32F0xx_HAL_Driver\Src\stm32f0xx_ll_utils.c</PathWithFileName>
@@ -658,7 +564,6 @@
       <FileNumber>19</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\Libraries\STM32F0xx_HAL_Driver\Src\stm32f0xx_ll_rcc.c</PathWithFileName>
@@ -679,7 +584,6 @@
       <FileNumber>20</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\core\common.cpp</PathWithFileName>
@@ -692,7 +596,6 @@
       <FileNumber>21</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\core\core.cpp</PathWithFileName>
@@ -705,7 +608,6 @@
       <FileNumber>22</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\core\ebox_it.cpp</PathWithFileName>
@@ -717,8 +619,7 @@
       <GroupNumber>4</GroupNumber>
       <FileNumber>23</FileNumber>
       <FileType>8</FileType>
-      <tvExp>1</tvExp>
-      <Focus>0</Focus>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\analog.cpp</PathWithFileName>
@@ -731,7 +632,6 @@
       <FileNumber>24</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\exti.cpp</PathWithFileName>
@@ -744,7 +644,6 @@
       <FileNumber>25</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\gpio.cpp</PathWithFileName>
@@ -757,7 +656,6 @@
       <FileNumber>26</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\i2c.cpp</PathWithFileName>
@@ -770,7 +668,6 @@
       <FileNumber>27</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\iflash.cpp</PathWithFileName>
@@ -783,7 +680,6 @@
       <FileNumber>28</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\in_capture.cpp</PathWithFileName>
@@ -796,7 +692,6 @@
       <FileNumber>29</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\pwm.cpp</PathWithFileName>
@@ -809,7 +704,6 @@
       <FileNumber>30</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\rtc.cpp</PathWithFileName>
@@ -822,7 +716,6 @@
       <FileNumber>31</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\softi2c.cpp</PathWithFileName>
@@ -835,7 +728,6 @@
       <FileNumber>32</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\softspi.cpp</PathWithFileName>
@@ -848,7 +740,6 @@
       <FileNumber>33</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\SPI.cpp</PathWithFileName>
@@ -861,7 +752,6 @@
       <FileNumber>34</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\timer.cpp</PathWithFileName>
@@ -874,7 +764,6 @@
       <FileNumber>35</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\uart.cpp</PathWithFileName>
@@ -887,7 +776,6 @@
       <FileNumber>36</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\Peripherals\wdg.cpp</PathWithFileName>
@@ -900,7 +788,6 @@
       <FileNumber>37</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\mcu\stm32f0x\ebox\object.cpp</PathWithFileName>
@@ -921,7 +808,6 @@
       <FileNumber>38</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\util\dtostrf.c</PathWithFileName>
@@ -934,7 +820,6 @@
       <FileNumber>39</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\util\heap.c</PathWithFileName>
@@ -947,7 +832,6 @@
       <FileNumber>40</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\util\itoa.c</PathWithFileName>
@@ -960,7 +844,6 @@
       <FileNumber>41</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\util\calendar.cpp</PathWithFileName>
@@ -973,7 +856,6 @@
       <FileNumber>42</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\util\color_convert.cpp</PathWithFileName>
@@ -986,7 +868,6 @@
       <FileNumber>43</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\util\ringbuf.cpp</PathWithFileName>
@@ -999,7 +880,6 @@
       <FileNumber>44</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\util\util.cpp</PathWithFileName>
@@ -1012,7 +892,6 @@
       <FileNumber>45</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\util\WString.cpp</PathWithFileName>
@@ -1025,7 +904,6 @@
       <FileNumber>46</FileNumber>
       <FileType>8</FileType>
       <tvExp>1</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\util\printf\printf.cpp</PathWithFileName>
@@ -1046,7 +924,6 @@
       <FileNumber>47</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\74HC595.cpp</PathWithFileName>
@@ -1059,7 +936,6 @@
       <FileNumber>48</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\at24c02.cpp</PathWithFileName>
@@ -1072,7 +948,6 @@
       <FileNumber>49</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\at45db.cpp</PathWithFileName>
@@ -1085,7 +960,6 @@
       <FileNumber>50</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\Button.cpp</PathWithFileName>
@@ -1098,7 +972,6 @@
       <FileNumber>51</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\colorled.cpp</PathWithFileName>
@@ -1111,7 +984,6 @@
       <FileNumber>52</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\dht11.cpp</PathWithFileName>
@@ -1124,7 +996,6 @@
       <FileNumber>53</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\DS3231.cpp</PathWithFileName>
@@ -1137,7 +1008,6 @@
       <FileNumber>54</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\encoder.cpp</PathWithFileName>
@@ -1150,7 +1020,6 @@
       <FileNumber>55</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\fm25v.cpp</PathWithFileName>
@@ -1163,7 +1032,6 @@
       <FileNumber>56</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\GP2Y1051.cpp</PathWithFileName>
@@ -1176,7 +1044,6 @@
       <FileNumber>57</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\ir_decoder.cpp</PathWithFileName>
@@ -1189,7 +1056,6 @@
       <FileNumber>58</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\ir_encoder.cpp</PathWithFileName>
@@ -1202,7 +1068,6 @@
       <FileNumber>59</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\key_dm.cpp</PathWithFileName>
@@ -1215,7 +1080,6 @@
       <FileNumber>60</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\L3G4200D.cpp</PathWithFileName>
@@ -1228,7 +1092,6 @@
       <FileNumber>61</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\lcd_1.8.cpp</PathWithFileName>
@@ -1241,7 +1104,6 @@
       <FileNumber>62</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\LCD1602.cpp</PathWithFileName>
@@ -1254,7 +1116,6 @@
       <FileNumber>63</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\LED.cpp</PathWithFileName>
@@ -1267,7 +1128,6 @@
       <FileNumber>64</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\led_segment.cpp</PathWithFileName>
@@ -1280,7 +1140,6 @@
       <FileNumber>65</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\lsm303dhlc.cpp</PathWithFileName>
@@ -1293,7 +1152,6 @@
       <FileNumber>66</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\LTC1446.cpp</PathWithFileName>
@@ -1306,7 +1164,6 @@
       <FileNumber>67</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\Max7456.cpp</PathWithFileName>
@@ -1319,7 +1176,6 @@
       <FileNumber>68</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\mmc_sd.cpp</PathWithFileName>
@@ -1332,7 +1188,6 @@
       <FileNumber>69</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\MPU6050.CPP</PathWithFileName>
@@ -1345,7 +1200,6 @@
       <FileNumber>70</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\Nokia5110.cpp</PathWithFileName>
@@ -1358,7 +1212,6 @@
       <FileNumber>71</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\NRF24L01.cpp</PathWithFileName>
@@ -1371,7 +1224,6 @@
       <FileNumber>72</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\OLED.cpp</PathWithFileName>
@@ -1384,7 +1236,6 @@
       <FileNumber>73</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\OLED_ssd1306.cpp</PathWithFileName>
@@ -1397,7 +1248,6 @@
       <FileNumber>74</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\parallel_gpio.cpp</PathWithFileName>
@@ -1410,7 +1260,6 @@
       <FileNumber>75</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\TM1638.cpp</PathWithFileName>
@@ -1423,7 +1272,6 @@
       <FileNumber>76</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\ultrasonic_wave.cpp</PathWithFileName>
@@ -1436,7 +1284,6 @@
       <FileNumber>77</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\w25x16.cpp</PathWithFileName>
@@ -1449,7 +1296,6 @@
       <FileNumber>78</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\w5500.cpp</PathWithFileName>
@@ -1470,7 +1316,6 @@
       <FileNumber>79</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\network\socket.cpp</PathWithFileName>
@@ -1483,7 +1328,6 @@
       <FileNumber>80</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\network\dhcp.cpp</PathWithFileName>
@@ -1496,7 +1340,6 @@
       <FileNumber>81</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\network\dns.cpp</PathWithFileName>
@@ -1509,7 +1352,6 @@
       <FileNumber>82</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\network\tcp.cpp</PathWithFileName>
@@ -1522,7 +1364,6 @@
       <FileNumber>83</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\network\udp.cpp</PathWithFileName>
@@ -1543,7 +1384,6 @@
       <FileNumber>84</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\fat\wrapperdiskio.cpp</PathWithFileName>
@@ -1556,7 +1396,6 @@
       <FileNumber>85</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\fat\diskio.c</PathWithFileName>
@@ -1569,7 +1408,6 @@
       <FileNumber>86</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\fat\ff.c</PathWithFileName>
@@ -1590,7 +1428,6 @@
       <FileNumber>87</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\WiFi\ESP8266.cpp</PathWithFileName>
@@ -1603,7 +1440,6 @@
       <FileNumber>88</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\WiFi\esp8266_tcp.cpp</PathWithFileName>
@@ -1616,7 +1452,6 @@
       <FileNumber>89</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\common\edriver\WiFi\esp8266_udp.cpp</PathWithFileName>
@@ -1637,7 +1472,6 @@
       <FileNumber>90</FileNumber>
       <FileType>8</FileType>
       <tvExp>1</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\user\main.cpp</PathWithFileName>
@@ -1650,7 +1484,6 @@
       <FileNumber>91</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
-      <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\user\bsp.cpp</PathWithFileName>

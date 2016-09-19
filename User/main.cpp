@@ -1,39 +1,3 @@
-<<<<<<< HEAD
-/*
-file   : *.cpp
-author : shentq
-version: V1.0
-date   : 2015/7/5
-
-Copyright 2015 shentq. All Rights Reserved.
-*/
-
-/*
-ADC测试
-*/
-#include "ebox.h"
-
-
-Analog AD(&PA0);
-Analog AD2(&PA2);
-Analog AD8(&PB1);
-
-// DMA模式采集
-AnalogDMA ADINS(5);
-
-
-void setup()
-{
-	ebox_init();
-	uart1.begin(115200);
-	uart1.printf("begin \r\n");
-	PA5.mode(OUTPUT_PP);
-//    ewwd.begin(36208);
-  // DMA模式下添加需要采集的通道。采集结果按照ADC通道从低到高排列，和加入顺序无关
-	ADINS.Add(&PA0);
-	ADINS.Add(&PA2);
-	ADINS.Add(&PA1);
-=======
 /**
   ******************************************************************************
   * @file   : *.cpp
@@ -89,7 +53,6 @@ void setup()
 	time.Minutes += 2;
 	rtc.set_alarm(time);
 	rtc.attach_alarm_interrupt(&exit);
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271
 }
 
 int main(void)
@@ -99,26 +62,10 @@ int main(void)
 	setup();
 	while (1)
 	{
-<<<<<<< HEAD
-		i = AD.read();
-		uart1.printf("PA2 = %d ---",i);
-		ADINS.read();
-		uart1.printf("DMA = %d %d %d %d %d ---",ADINS.Buffer[0],ADINS.Buffer[1],ADINS.Buffer[2],ADINS.Buffer[3],ADINS.Buffer[4]);
-	
-		i = AD8.read();
-		uart1.printf("PB8 = %d ---",i);
-
-		i = AD.read_voltage();
-		uart1.printf("PA0 V = %d mv ---",i);
-		PA5.toggle();
-		delay_ms(3000);
-		uart1.printf("cpu temperature: %.2f \r\n",sys.get_cpu_temperature());
-=======
 		rtc.get_date_time(&dtime);
 		uart1.printf("\n\r %2d:%02d:%2d秒",dtime.hour,dtime.min,dtime.sec);
 		uart1.printf("\n\r 20%2d年%02d月%2d日 星期%02d",dtime.year,dtime.min,dtime.date,dtime.week);
 		delay_ms(30000);
->>>>>>> 71abb22d27f3e1a1f8582fcafce00402d13f7271
 	}
 }
 
