@@ -17,8 +17,9 @@
   */
 /**
  * Modification History:
- * -LQM (2016/9/11)
- *      *移植到STM32F0,基于HAL库LL层
+ * -LQM                  
+ *          *移植到STM32F0,基于HAL库LL层  2016年10月18日
+ *	     *支持I2C1(PB6,PB7);I2C1(PB8,PB9);I2C2(PB10,PB11);IC21(PB10,PB11)@STM32F030x6 & STM32F030x4
  */
 /* Define to prevent recursive inclusion -------------------------------------*/
 

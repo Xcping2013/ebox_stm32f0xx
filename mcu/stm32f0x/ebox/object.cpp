@@ -162,12 +162,13 @@ SoftSpi	sspi1(&PA5, &PA6, &PA7);
 //SoftSpi	sspi1(&PA4, &PA3, &PA2);
 
 ////i2c
-#ifdef STM32F030x6
-//I2c     i2c1(I2C1, &PA9, &PA10);
-#else
-//I2c     i2c1(I2C1, &PB6, &PB7);
-#endif
+//#ifdef STM32F030x6
+////I2c     i2c1(I2C1, &PA9, &PA10);
+//#else
+////I2c     i2c1(I2C1, &PB6, &PB7);
+//#endif
 //I2c     i2c2(I2C2, &PB10, &PB11);
+//I2c 	es2c(I2C2,&PB13,&PB14);
 //SoftI2c si2c(&PA4, &PA5);
 //SoftI2c si2c1(&PB6, &PB7);
 //SoftI2c si2c2(&PB10, &PB11);

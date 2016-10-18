@@ -18,7 +18,7 @@
 /**
  * Modification History:
  * -LQM (2016/8/25)
- *      *移植到STM32F0,基于HAL库LL层
+ *    *移植到STM32F0,基于HAL库LL层
  *		*添加mode(PIN_MODE mode, uint8_t af_configration)方法
  * -LQM (2016/9/11)
  *		*添加AF_OD_PU，PD;AF_PP_PU，PD;OUTPUT_PP_PU,PD;OUTPUT_OD_PU,PD;

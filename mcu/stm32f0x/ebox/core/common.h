@@ -36,10 +36,10 @@
 
 #define EBOX_VERSION "1.2"
 
-#define EOK         0
-#define EWAIT       1
-#define EBUSY       2
-#define ETIMEOUT    3
+#define EOK         0   //ok
+#define EWAIT       1   //µÈ´ý
+#define EBUSY       2   //Ã¦
+#define ETIMEOUT    3   //³¬Ê±
 #define EPARA       4
 #define E2LONG      5
 #define EOTHER      128
