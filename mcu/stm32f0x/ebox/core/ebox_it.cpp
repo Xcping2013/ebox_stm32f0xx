@@ -27,99 +27,108 @@ __IO uint16_t t3_overflow_times = 0;
 __IO uint16_t t4_overflow_times = 0;
 
 extern "C" {
+	void TIM1_CC_IRQHandler(void)
+	{
+		/* Check whether CC1 interrupt is pending */
+		if (LL_TIM_IsActiveFlag_CC1(TIM1) == 1)
+		{
+			/* Clear the update interrupt flag*/
+			LL_TIM_ClearFlag_CC1(TIM1);
+			/* TIM1 capture/compare interrupt processing */
+			tim_irq_callback(TIM1_IT_CC1);
+		}
+		/* Check whether CC1 interrupt is pending */
+		if (LL_TIM_IsActiveFlag_CC2(TIM1) == 1)
+		{
+			/* Clear the update interrupt flag*/
+			LL_TIM_ClearFlag_CC2(TIM1);
+			/* TIM1 capture/compare interrupt processing(function defined in main.c) */
+			tim_irq_callback(TIM1_IT_CC2);
+		}
+		/* Check whether CC1 interrupt is pending */
+		if (LL_TIM_IsActiveFlag_CC3(TIM1) == 1)
+		{
+			/* Clear the update interrupt flag*/
+			LL_TIM_ClearFlag_CC3(TIM1);
+			/* TIM1 capture/compare interrupt processing(function defined in main.c) */
+			tim_irq_callback(TIM1_IT_CC3);
+		}
+		/* Check whether CC1 interrupt is pending */
+		if (LL_TIM_IsActiveFlag_CC4(TIM1) == 1)
+		{
+			/* Clear the update interrupt flag*/
+			LL_TIM_ClearFlag_CC4(TIM1);
+			/* TIM1 capture/compare interrupt processing(function defined in main.c) */
+			tim_irq_callback(TIM1_IT_CC4);
+		}
+	}
 
-
-//    void TIM1_UP_IRQHandler(void)
-//    {
-
-//        if(TIM_GetITStatus(TIM1 , TIM_IT_Update) == SET)
-//        {
-//            t1_overflow_times++;
-//						tim_irq_callback(TIM1_IT_Update);
-//            TIM_ClearITPendingBit(TIM1 , TIM_FLAG_Update);
-//        }
-//        if(TIM_GetITStatus(TIM1 , TIM_IT_CC1) == SET)
-//        {
-//						tim_irq_callback(TIM1_IT_CC1);
-//            TIM_ClearITPendingBit(TIM1 , TIM_FLAG_CC1);
-//        }
-//        if(TIM_GetITStatus(TIM1 , TIM_IT_CC2) == SET)
-//        {
-//						tim_irq_callback(TIM1_IT_CC2);
-//            TIM_ClearITPendingBit(TIM1 , TIM_FLAG_CC2);
-//        }
-//        if(TIM_GetITStatus(TIM1 , TIM_IT_CC3) == SET)
-//        {
-//						tim_irq_callback(TIM1_IT_CC3);
-//            TIM_ClearITPendingBit(TIM1 , TIM_FLAG_CC3);
-//        }
-//        if(TIM_GetITStatus(TIM1 , TIM_IT_CC4) == SET)
-//        {
-//						tim_irq_callback(TIM1_IT_CC4);
-//            TIM_ClearITPendingBit(TIM1 , TIM_FLAG_CC4);
-//        }
-//    }
+	void TIM1_BRK_UP_TRG_COM_IRQHandler(){
+		if (LL_TIM_IsActiveFlag_UPDATE(TIM1) == 1){
+			t1_overflow_times++;
+			tim_irq_callback(TIM1_IT_Update);
+			LL_TIM_ClearFlag_UPDATE(TIM1);
+		}
+	}
 #ifdef TIM2
-//    void TIM2_IRQHandler(void)
-//    {
-
-//        if(TIM_GetITStatus(TIM2 , TIM_IT_Update) == SET)
-//        {
-//            t2_overflow_times++;
-//						tim_irq_callback(TIM2_IT_Update);
-//            //TIM_ClearITPendingBit(TIM2 , TIM_FLAG_Update);
-//					  LL_TIM_ClearFlag_UPDATE(TIM2);
-//        }
-//        if(TIM_GetITStatus(TIM2 , TIM_IT_CC1) == SET)
-//        {
-//						tim_irq_callback(TIM2_IT_CC1);
-//            TIM_ClearITPendingBit(TIM2 , TIM_FLAG_CC1);
-//        }
-//        if(TIM_GetITStatus(TIM2 , TIM_IT_CC2) == SET)
-//        {
-//						tim_irq_callback(TIM2_IT_CC2);
-//            TIM_ClearITPendingBit(TIM2 , TIM_FLAG_CC2);
-//        }
-//        if(TIM_GetITStatus(TIM2 , TIM_IT_CC3) == SET)
-//        {
-//						tim_irq_callback(TIM2_IT_CC3);
-//            TIM_ClearITPendingBit(TIM2 , TIM_FLAG_CC3);
-//        }
-//        if(TIM_GetITStatus(TIM2 , TIM_IT_CC4) == SET)
-//        {
-//						tim_irq_callback(TIM2_IT_CC4);
-//            TIM_ClearITPendingBit(TIM2 , TIM_FLAG_CC4);
-//        }
-//    }
+	void TIM2_IRQHandler(void)
+	{
+		if (LL_TIM_IsActiveFlag_UPDATE(TIM2))
+		{
+			t2_overflow_times++;
+			tim_irq_callback(TIM2_IT_Update);
+			LL_TIM_ClearFlag_UPDATE(TIM2);
+		}
+		if (LL_TIM_IsActiveFlag_CC1(TIM2) == 1)
+		{
+			tim_irq_callback(TIM2_IT_CC1);
+			LL_TIM_ClearFlag_CC1(TIM2);
+		}
+		if (LL_TIM_IsActiveFlag_CC2(TIM2) == 1)
+		{
+			tim_irq_callback(TIM2_IT_CC2);
+			LL_TIM_ClearFlag_CC2(TIM2);
+		}
+		if (LL_TIM_IsActiveFlag_CC3(TIM2) == 1)
+		{
+			tim_irq_callback(TIM2_IT_CC3);
+			LL_TIM_ClearFlag_CC3(TIM2);
+		}
+		if (LL_TIM_IsActiveFlag_CC4(TIM2) == 1)
+		{
+			tim_irq_callback(TIM2_IT_CC4);
+			LL_TIM_ClearFlag_CC4(TIM2);
+		}
+	}
 #endif
 	void TIM3_IRQHandler(void)
 	{
 		if (LL_TIM_IsActiveFlag_UPDATE(TIM3))
 		{
 			t3_overflow_times++;
-			tim_irq_callback(TIM3_IT_Update);
+			//tim_irq_callback(TIM3_IT_Update);
 			LL_TIM_ClearFlag_UPDATE(TIM3);
 		}
-//        if(TIM_GetITStatus(TIM3 , TIM_IT_CC1) == SET)
-//        {
-//						tim_irq_callback(TIM3_IT_CC1);
-//            TIM_ClearITPendingBit(TIM2 , TIM_FLAG_CC1);
-//        }
-//        if(TIM_GetITStatus(TIM3 , TIM_IT_CC2) == SET)
-//        {
-//						tim_irq_callback(TIM3_IT_CC2);
-//            TIM_ClearITPendingBit(TIM3 , TIM_FLAG_CC2);
-//        }
-//        if(TIM_GetITStatus(TIM3 , TIM_IT_CC3) == SET)
-//        {
-//						tim_irq_callback(TIM3_IT_CC3);
-//            TIM_ClearITPendingBit(TIM3 , TIM_FLAG_CC3);
-//        }
-//        if(TIM_GetITStatus(TIM3 , TIM_IT_CC4) == SET)
-//        {
-//						tim_irq_callback(TIM3_IT_CC4);
-//            TIM_ClearITPendingBit(TIM3 , TIM_FLAG_CC4);
-//        }
+		if (LL_TIM_IsActiveFlag_CC1(TIM3) == 1)
+		{			
+			LL_TIM_ClearFlag_CC1(TIM3);
+			tim_irq_callback(TIM3_IT_CC1);
+		}
+		if (LL_TIM_IsActiveFlag_CC2(TIM3) == 1)
+		{
+			tim_irq_callback(TIM3_IT_CC2);
+			LL_TIM_ClearFlag_CC2(TIM3);
+		}
+		if (LL_TIM_IsActiveFlag_CC3(TIM3) == 1)
+		{
+			tim_irq_callback(TIM3_IT_CC3);
+			LL_TIM_ClearFlag_CC3(TIM3);
+		}
+		if (LL_TIM_IsActiveFlag_CC4(TIM3) == 1)
+		{
+			tim_irq_callback(TIM3_IT_CC4);
+			LL_TIM_ClearFlag_CC4(TIM3);
+		}
 	}
 //    void TIM4_IRQHandler(void)
 //    {

@@ -23,7 +23,7 @@
  *      *增加了get_timer_clock(),get_max_frq(),get_accuracy()三个函数接口
  * -LQM (2016/9/1)
  *      *移植到STM32F0,基于HAL库LL层  最大输出频率为 TIM时钟频率/100
- *		  *屏蔽TIM2,占用TIM3 1-4,TIM14CH1，使用时需要注意
+ *		*屏蔽TIM2,占用TIM3 1-4,TIM14CH1，使用时需要注意
  */
 /* Define to prevent recursive inclusion -------------------------------------*/
 

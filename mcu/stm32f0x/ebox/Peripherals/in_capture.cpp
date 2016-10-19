@@ -15,17 +15,31 @@
   * <h2><center>&copy; Copyright 2015 shentq. All Rights Reserved.</center></h2>
   ******************************************************************************
   */
-
+/**
+ * Modification History:
+ * cat_li			2016年10月2日
+ *      *移植到STM32F0平台
+ */
 
 /* Includes ------------------------------------------------------------------*/
 #include "in_capture.h"
 #include "timer_it.h"
+
+#define TIMxCH1 0x01
+#define TIMxCH2 0x02
+#define TIMxCH3 0x03
+#define TIMxCH4 0x04
+
 extern uint16_t t1_overflow_times ;
 extern uint16_t t2_overflow_times ;
 extern uint16_t t3_overflow_times ;
 extern uint16_t t4_overflow_times ;
 
-
+/**
+ * @brief    InCapture构造函数，实例化一个对象
+ * @param    *capture_pin: 指定用来捕获信号用的Pin
+ * @return   NONE
+ */
 InCapture::InCapture(Gpio *capture_pin)
 {
     this->capture_pin = capture_pin;
@@ -36,229 +50,254 @@ InCapture::InCapture(Gpio *capture_pin)
     low_capture = 0;
     _capture = 0;
 }
+
+/**
+ * @brief    begin，启动捕获
+ * @param    prescaler: 分频系数
+ * @return   NONE
+ */
 void InCapture::begin(uint16_t prescaler )
 {
-	  uint8_t index;
-		capture_pin->mode(INPUT_PU);
-    init_info(this->capture_pin);
+	uint8_t index;
+	// 初始化TIM基本信息 TIMx,Channel
+	init_info(this->capture_pin);
+	capture_pin->mode(AF_PP,pin_AFx);
 
-    this->prescaler = prescaler;
-    base_init(this->period, this->prescaler);
-    timer_clock = get_timer_clock();
-    switch(ch)
-    {
-    case TIM_Channel_1:
-        _get_capture = TIM_GetCapture1;
-        _set_polarity = TIM_OC1PolarityConfig;
-        break;
-    case TIM_Channel_2:
-        _get_capture = TIM_GetCapture2;
-        _set_polarity = TIM_OC2PolarityConfig;
-        break;
-    case TIM_Channel_3:
-        _get_capture = TIM_GetCapture3;
-        _set_polarity = TIM_OC3PolarityConfig;
-        break;
-    case TIM_Channel_4:
-        _get_capture = TIM_GetCapture4;
-        _set_polarity = TIM_OC4PolarityConfig;
-        break;
-    }
+	this->prescaler = prescaler;
+	base_init(this->period, this->prescaler);
+	timer_clock = get_timer_clock();
+
+	switch (ch)
+	{
+	case TIMxCH1:
+		_get_capture = LL_TIM_IC_GetCaptureCH1;
+//        _set_polarity = TIM_OC1PolarityConfig;
+		break;
+	case TIMxCH2:
+		_get_capture = LL_TIM_IC_GetCaptureCH2;
+//        _set_polarity = TIM_OC2PolarityConfig;
+		break;
+	case TIMxCH3:
+		_get_capture = LL_TIM_IC_GetCaptureCH3;
+//        _set_polarity = TIM_OC3PolarityConfig;
+		break;
+	case TIMxCH4:
+		_get_capture = LL_TIM_IC_GetCaptureCH4;
+//        _set_polarity = TIM_OC4PolarityConfig;
+		break;
+	}
     switch((uint32_t)TIMx)
     {
     case (uint32_t)TIM1_BASE:
-        overflow_times = &t1_overflow_times;
-				if(ch== TIM_Channel_1) index = TIM1_IT_CC1;
-				if(ch== TIM_Channel_2) index = TIM1_IT_CC2;
-				if(ch== TIM_Channel_3) index = TIM1_IT_CC3;
-				if(ch== TIM_Channel_4) index = TIM1_IT_CC4;		
+	overflow_times = &t1_overflow_times;
+				if(ch== TIMxCH1) index = TIM1_IT_CC1;
+				if(ch== TIMxCH2) index = TIM1_IT_CC2;
+				if(ch== TIMxCH3) index = TIM1_IT_CC3;
+				if(ch== TIMxCH4) index = TIM1_IT_CC4;
         break;
     case (uint32_t)TIM2_BASE:
         overflow_times = &t2_overflow_times;
-				if(ch== TIM_Channel_1) index = TIM2_IT_CC1;
-				if(ch== TIM_Channel_2) index = TIM2_IT_CC2;
-				if(ch== TIM_Channel_3) index = TIM2_IT_CC3;
-				if(ch== TIM_Channel_4) index = TIM2_IT_CC4;	
+				if(ch== TIMxCH1) index = TIM2_IT_CC1;
+				if(ch== TIMxCH2) index = TIM2_IT_CC2;
+				if(ch== TIMxCH3) index = TIM2_IT_CC3;
+				if(ch== TIMxCH4) index = TIM2_IT_CC4;
         break;
     case (uint32_t)TIM3_BASE:
         overflow_times = &t3_overflow_times;
-				if(ch== TIM_Channel_1) index = TIM3_IT_CC1;
-				if(ch== TIM_Channel_2) index = TIM3_IT_CC2;
-				if(ch== TIM_Channel_3) index = TIM3_IT_CC3;
-				if(ch== TIM_Channel_4) index = TIM3_IT_CC4;	
+				if(ch== TIMxCH1) index = TIM3_IT_CC1;
+				if(ch== TIMxCH2) index = TIM3_IT_CC2;
+				if(ch== TIMxCH3) index = TIM3_IT_CC3;
+				if(ch== TIMxCH4) index = TIM3_IT_CC4;
         break;
-    case (uint32_t)TIM4_BASE:
-        overflow_times = &t4_overflow_times;
-				if(ch== TIM_Channel_1) index = TIM4_IT_CC1;
-				if(ch== TIM_Channel_2) index = TIM4_IT_CC2;
-				if(ch== TIM_Channel_3) index = TIM4_IT_CC3;
-				if(ch== TIM_Channel_4) index = TIM4_IT_CC4;	
-        break;
-
-    }
-    tim_irq_init(index,(&InCapture::_irq_handler),(uint32_t)this);
+//    case (uint32_t)TIM4_BASE:
+//        overflow_times = &t4_overflow_times;
+//				if(ch== TIMxCH1) index = TIM4_IT_CC1;
+//				if(ch== TIMxCH2) index = TIM4_IT_CC2;
+//				if(ch== TIMxCH3) index = TIM4_IT_CC3;
+//				if(ch== TIMxCH4) index = TIM4_IT_CC4;
+//        break;
+	}
+	//index = TIM1_IT_CC1;
+	tim_irq_init(index,(&InCapture::_irq_handler),(uint32_t)this);
 }
+
+/**
+ * @brief    base_init，TIM初始化
+ * @param    period: 周期
+ * @param    prescaler: 分频系数
+ * @return   NONE
+ */
 void InCapture::base_init(uint16_t period, uint16_t prescaler)
 {
-    this->period = period;//更新period
-    this->prescaler = prescaler;//更新prescaler
+	this->period = period;//更新period
+	this->prescaler = prescaler;//更新prescaler
 
-    TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-    TIM_ICInitTypeDef TIMx_ICInitStructure;
-    NVIC_InitTypeDef NVIC_InitStructure;
-
-
-    switch((uint32_t)this->TIMx)
-    {
-    case (uint32_t)TIM1_BASE:
-    			RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
-    			NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;//
-    			break;
+	switch ((uint32_t)this->TIMx)
+	{
+	case (uint32_t)TIM1_BASE:
+		LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_TIM1);
+		NVIC_SetPriority(TIM1_CC_IRQn, 0);
+		NVIC_EnableIRQ(TIM1_CC_IRQn);
+		NVIC_EnableIRQ(TIM1_BRK_UP_TRG_COM_IRQn);
+		break;
+#ifdef TIM2
     case (uint32_t)TIM2_BASE:
-        RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-        NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;//
-        break;
+		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM2);
+		NVIC_SetPriority(TIM2_IRQn, 0);
+		NVIC_EnableIRQ(TIM2_IRQn);
+		break;
+#endif
+#ifdef TIM3
     case (uint32_t)TIM3_BASE:
-        RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
-        NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;//
+		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM3);
+		NVIC_SetPriority(TIM3_IRQn, 0);
+		NVIC_EnableIRQ(TIM3_IRQn);
         break;
-    case (uint32_t)TIM4_BASE:
-        RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
-        NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;//
-        break;
+#endif
     }
+// 设定TIM溢出参数
+	LL_TIM_SetPrescaler(TIMx,prescaler-1);
+	LL_TIM_SetAutoReload(TIMx,period - 1);
+	LL_TIM_SetCounterMode(TIMx,LL_TIM_COUNTERDIRECTION_UP);
 
-    TIM_TimeBaseStructure.TIM_Period = this->period - 1; //ARR
-    TIM_TimeBaseStructure.TIM_Prescaler = this->prescaler - 1;
-    TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; //
-    TIM_TimeBaseInit(TIMx, &TIM_TimeBaseStructure);
+//	LL_TIM_ClearFlag_UPDATE(TIMx); //必须加，否则开启中断会立即产生一次中断
+	LL_TIM_EnableIT_UPDATE(TIMx);
+// 设定TIM输入捕获信息
+	/************************************/
+	/* Input capture mode configuration */
+	/************************************/
+	/* Select the active input: IC1 = TI1FP1 */
+	LL_TIM_IC_SetActiveInput(TIMx, channel, LL_TIM_ACTIVEINPUT_DIRECTTI);
+	/* Configure the input filter duration: no filter needed */
+	LL_TIM_IC_SetFilter(TIMx, channel, LL_TIM_IC_FILTER_FDIV1);
+	/* Set input prescaler: prescaler is disabled */
+	LL_TIM_IC_SetPrescaler(TIMx, channel, LL_TIM_ICPSC_DIV1);
+	/* Select the edge of the active transition on the TI1 channel: rising edge */
+	LL_TIM_IC_SetPolarity(TIMx, channel, polarity);
+	/**************************/
+	/* TIM1 interrupts set-up */
+	/**************************/
+	/* Enable the capture/compare interrupt for channel 1 */
+	LL_TIM_EnableIT_CC1(TIMx);
+	/***********************/
+	/* Start input capture */
+	/***********************/
+	/* Enable output channel 1 */
+	LL_TIM_CC_EnableChannel(TIMx, channel);
 
-    TIM_ARRPreloadConfig(TIMx, ENABLE);
-
-
-    //初始化TIMx输入捕获参数 通道2
-    TIMx_ICInitStructure.TIM_Channel = ch; //CC1S=01 	选择输入端 IC1映射到TI1上
-    TIMx_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Falling;	//上升沿捕获
-    TIMx_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI; //映射到TI1上
-    TIMx_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	  //配置输入分频,不分频
-    TIMx_ICInitStructure.TIM_ICFilter = 0x00;	  //IC1F=0000 配置输入滤波器 不滤波
-    TIM_ICInit(this->TIMx, &TIMx_ICInitStructure);
-    TIM_ClearFlag(this->TIMx, TIM_FLAG_Update);
-
-
-    //中断分组初始化
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  //先占优先级1级
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  //从优先级0级
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQ通道被使能
-    NVIC_Init(&NVIC_InitStructure);   //根据NVIC_InitStruct中指定的参数初始化外设NVIC寄存器
-
-    switch(ch)
-    {
-    case TIM_Channel_1:
-        TIM_ClearFlag(this->TIMx, TIM_FLAG_CC1);
-        TIM_ITConfig(this->TIMx,  TIM_IT_CC1 | TIM_IT_Update, ENABLE);   //使能TIMx的通道2捕获中断
-        break;
-    case TIM_Channel_2:
-        TIM_ClearFlag(this->TIMx, TIM_FLAG_CC2);
-        TIM_ITConfig(this->TIMx,  TIM_IT_CC2 | TIM_IT_Update, ENABLE);   //使能TIMx的通道2捕获中断
-        break;
-    case TIM_Channel_3:
-        TIM_ClearFlag(this->TIMx, TIM_FLAG_CC3);
-        TIM_ITConfig(this->TIMx,  TIM_IT_CC3 | TIM_IT_Update, ENABLE);   //使能TIMx的通道2捕获中断
-        break;
-    case TIM_Channel_4:
-        TIM_ClearFlag(this->TIMx, TIM_FLAG_CC4);
-        TIM_ITConfig(this->TIMx,  TIM_IT_CC4 | TIM_IT_Update, ENABLE);   //使能TIMx的通道2捕获中断
-        break;
-    }
-
-    TIM_Cmd(TIMx, ENABLE); //
-
+	/* Enable counter */
+	LL_TIM_EnableCounter(TIMx);
+	//LL_TIM_GenerateEvent_UPDATE(TIMx);
 }
+
+/**
+ * @brief    init_info 初始化信息
+ * @param    *capture_pin: 指定用来捕获信号用的Pin
+ * @return   NONE
+ */
 void InCapture::init_info(Gpio *capture_pin)
 {
-    if(this->capture_pin->port == GPIOA)
-    {
-        switch(this->capture_pin->pin)
-        {
-        case GPIO_Pin_0:
-            TIMx = TIM2;
-            ch = TIM_Channel_1;//irq = TIM2_IRQn;
-            break;
-        case GPIO_Pin_1:
-            TIMx = TIM2;
-            ch = TIM_Channel_2;//irq = TIM2_IRQn;
-            break;
-        case GPIO_Pin_2:
-            TIMx = TIM2;
-            ch = TIM_Channel_3;//irq = TIM2_IRQn;
-            break;
-        case GPIO_Pin_3:
-            TIMx = TIM2;
-            ch = TIM_Channel_4;//irq = TIM2_IRQn;
-            break;
-
-        case GPIO_Pin_6:
-            TIMx = TIM3;
-            ch = TIM_Channel_1;//irq = TIM3_IRQn;
-            break;
-        case GPIO_Pin_7:
-            TIMx = TIM3;
-            ch = TIM_Channel_2;//irq = TIM3_IRQn;
-            break;
-            //            case GPIO_Pin_10:
-            //				TIMx = TIM3;ch = TIM_Channel_3;//irq = TIM3_IRQn;
-            //				break;
-            //			case GPIO_Pin_11:
-            //				TIMx = TIM3;ch = TIM_Channel_4;//irq = TIM3_IRQn;
-            //				break;
-
-        }
-    }
-    if(this->capture_pin->port == GPIOB)
-    {
-        switch(this->capture_pin->pin)
-        {
-        case GPIO_Pin_0:
-            TIMx = TIM3;
-            ch = TIM_Channel_3;//irq = TIM3_IRQn;
-            break;
-        case GPIO_Pin_1:
-            TIMx = TIM3;
-            ch = TIM_Channel_4;//irq = TIM3_IRQn;
-            break;
-
-        case GPIO_Pin_6:
-            TIMx = TIM4;
-            ch = TIM_Channel_1;//irq = TIM4_IRQn;
-            break;
-        case GPIO_Pin_7:
-            TIMx = TIM4;
-            ch = TIM_Channel_2;//irq = TIM4_IRQn;
-            break;
-        case GPIO_Pin_8:
-            TIMx = TIM4;
-            ch = TIM_Channel_3;//irq = TIM4_IRQn;
-            break;
-        case GPIO_Pin_9:
-            TIMx = TIM4;
-            ch = TIM_Channel_4;//irq = TIM4_IRQn;
-            break;
-        }
-    }
-
+	switch (capture_pin->id)
+	{
+#ifdef TIM2
+	case PA0_ID:
+		TIMx = TIM2;
+		ch = TIMxCH1;
+		channel = LL_TIM_CHANNEL_CH1;
+		break;
+	case PA1_ID:
+		TIMx = TIM2;
+		ch = TIMxCH2;
+		channel = LL_TIM_CHANNEL_CH2;
+		break;
+	case PA2_ID:
+		TIMx = TIM2;
+		ch = TIMxCH3;
+		channel = LL_TIM_CHANNEL_CH3;
+		break;
+	case PA3_ID:
+		TIMx = TIM2;
+		ch = TIMxCH4;
+		channel = LL_TIM_CHANNEL_CH4;
+		break;
+#endif
+#ifdef TIM3
+	case PA6_ID:
+		TIMx = TIM3;
+		ch = TIMxCH1;
+		channel = LL_TIM_CHANNEL_CH1;
+		pin_AFx = LL_GPIO_AF_1;
+		break;
+	case PA7_ID:
+		TIMx = TIM3;
+		ch = TIMxCH2;
+		channel = LL_TIM_CHANNEL_CH2;
+		pin_AFx = LL_GPIO_AF_1;
+		break;
+	case PB0_ID:
+		TIMx = TIM3;
+		ch = TIMxCH3;
+		channel = LL_TIM_CHANNEL_CH3;
+		pin_AFx = LL_GPIO_AF_1;
+		break;
+	case PB1_ID:
+		TIMx = TIM3;
+		ch = TIMxCH4;
+		channel = LL_TIM_CHANNEL_CH4;
+		pin_AFx = LL_GPIO_AF_1;
+	case PB4_ID:
+		TIMx = TIM3;
+		ch = TIMxCH3;
+		channel = LL_TIM_CHANNEL_CH1;
+		pin_AFx = LL_GPIO_AF_1;
+		break;
+	case PB5_ID:
+		TIMx = TIM3;
+		ch = TIMxCH4;
+		channel = LL_TIM_CHANNEL_CH2;
+		pin_AFx = LL_GPIO_AF_1;
+#endif
+#ifdef TIM1
+	case PA8_ID:
+		TIMx = TIM1;
+		ch = TIMxCH1;
+		channel = LL_TIM_CHANNEL_CH1;
+		pin_AFx = LL_GPIO_AF_2;
+		break;
+	case PA9_ID:
+		TIMx = TIM1;
+		ch = TIMxCH2;
+		channel = LL_TIM_CHANNEL_CH2;
+		pin_AFx = LL_GPIO_AF_2;
+		break;
+	case PA10_ID:
+		TIMx = TIM1;
+		ch = TIMxCH3;
+		channel = LL_TIM_CHANNEL_CH3;
+		pin_AFx = LL_GPIO_AF_2;
+		break;
+	case PA11_ID:
+		TIMx = TIM1;
+		ch = TIMxCH4;
+		channel = LL_TIM_CHANNEL_CH4;
+		pin_AFx = LL_GPIO_AF_2;
+		break;
+#endif
+	}
 }
 
 void InCapture::set_polarity_falling()
 {
     this->polarity = TIM_ICPOLARITY_FALLING;
-    _set_polarity(this->TIMx, this->polarity);//设置为下降沿捕获
+    //_set_polarity(this->TIMx, this->polarity);//设置为下降沿捕获
+	  LL_TIM_IC_SetPolarity(TIMx, channel, this->polarity);
 
 }
 void InCapture::set_polarity_rising()
 {
     this->polarity = TIM_ICPOLARITY_RISING;
-    _set_polarity(this->TIMx, this->polarity);//设置为下降沿捕获
+    //_set_polarity(this->TIMx, this->polarity);//设置为下降沿捕获
+	  LL_TIM_IC_SetPolarity(TIMx, channel, this->polarity);
 
 }
 uint32_t InCapture::get_capture()
@@ -284,11 +323,15 @@ void InCapture::complex_event()
 {
     uint32_t    capture = 0;
     uint32_t    now = 0;
-    now = _get_capture( this->TIMx ) + (*overflow_times) * this->period;  //get capture value
+    now = _get_capture( TIMx ) + (*overflow_times) * this->period;  //get capture value
     if(now > last_value)
         capture = now - last_value;
-    else
+    else if(now < last_value)
         capture = 0xffffffff + now - last_value;
+	else{
+		_available = false;
+		return ;
+	}
     last_value = now;
     
     if(polarity == TIM_ICPOLARITY_FALLING)//检测到下降沿，测量高电平时间完成
@@ -308,27 +351,59 @@ void InCapture::complex_event()
 void InCapture::simple_event()
 {
     uint32_t    now = 0;
-    now = _get_capture( this->TIMx ) + (*overflow_times) * this->period;  //get capture value
+    now = _get_capture(TIMx) + (*overflow_times) * this->period;  //get capture value
     if(now > last_value)
         _capture = now - last_value;
     else
         _capture = 0xffffffff + now - last_value;
     last_value = now;
-    
-    _available = true;  
+    _available = true; 		
 }
 
 bool InCapture::available()
 {
     return _available;
 }
+
 float InCapture::get_wave_frq()
 {
+//	  uint32_t TIM1CLK;
+//  uint32_t PSC;
+//  uint32_t IC1PSC;
+//  uint32_t IC1Polarity;
     _available = false;
     if(_capture == 0)
         return  (timer_clock/((high_capture + low_capture)));
     else
         return (timer_clock/_capture);
+	    /* The signal frequency is calculated as follows:                         */      
+    /* Frequency = (TIM1*IC1PSC) / (Capture*(PSC+1)*IC1Polarity)           */
+    /* where:                                                                 */                                                          
+    /*  Capture is the difference between two consecutive captures            */
+    /*  TIM1CLK is the timer counter clock frequency                           */
+    /*  PSC is the timer prescaler value                                      */
+    /*  IC1PSC is the input capture prescaler value                           */
+    /*  IC1Polarity value depends on the capture sensitivity:                 */
+    /*    1 if the input is sensitive to rising or falling edges              */
+    /*    2 if the input is sensitive to both rising and falling edges        */
+    
+    /* Retrieve actual TIM1 counter clock frequency */
+//    TIM1CLK = timer_clock;
+//    
+//    /* Retrieve actual TIM1 prescaler value */
+//    PSC = LL_TIM_GetPrescaler(TIM1);    
+//    /* Retrieve actual IC1 prescaler ratio */
+//    IC1PSC = __LL_TIM_GET_ICPSC_RATIO(LL_TIM_IC_GetPrescaler(TIM1, LL_TIM_CHANNEL_CH1));   
+//    /* Retrieve actual IC1 polarity setting */
+//    if (LL_TIM_IC_GetPolarity(TIM1, LL_TIM_CHANNEL_CH1) == LL_TIM_IC_POLARITY_BOTHEDGE)
+//      IC1Polarity = 2;
+//    else
+//      IC1Polarity = 1;
+//    
+//    /* Calculate input signal frequency */
+//    fre = (TIM1CLK *IC1PSC) / (peri*(PSC+1)*IC1Polarity);
+//    //peri = peri*1000000.0/TIM1CLK;
+//	  return fre;
 }
 float InCapture::get_wave_peroid()
 {
@@ -336,7 +411,8 @@ float InCapture::get_wave_peroid()
     if(_capture == 0)
         return  ((high_capture + low_capture)*1000000.0/(timer_clock));
     else
-        return  (_capture*1000000.0/(timer_clock));
+        return  (_capture/(timer_clock/1000000.0));
+//	return (_capture*1000000.0/timer_clock);
 }
 
 float InCapture::get_wave_high_duty()
@@ -376,7 +452,8 @@ float InCapture::get_wave_low_time()
 
 void InCapture::set_count(uint16_t count)
 {
-    TIM_SetCounter(this->TIMx, count); //reset couter
+    //TIM_SetCounter(this->TIMx, count); //reset couter
+	  LL_TIM_SetAutoReload(TIMx,count);
 }
 
 uint32_t InCapture::get_timer_clock()
@@ -386,24 +463,16 @@ uint32_t InCapture::get_timer_clock()
 
 uint32_t InCapture::get_timer_source_clock()
 {
-    uint32_t temp = 0;
+    //uint32_t temp = 0;
     uint32_t timer_clock = 0x00;
-    
-    RCC_ClocksTypeDef RCC_ClocksStatus;
-    RCC_GetClocksFreq(&RCC_ClocksStatus);
-    if ((uint32_t)this->TIMx == TIM1_BASE)
-    {
-        timer_clock = RCC_ClocksStatus.PCLK2_Frequency;
-    }
-    else
-    {
-        temp = RCC->CFGR;
-        if(temp & 0x00000400)//检测PCLK是否进行过分频，如果进行过分频则定时器的频率为PCLK1的两倍
-            timer_clock = RCC_ClocksStatus.PCLK1_Frequency * 2;
-        else
-            timer_clock = RCC_ClocksStatus.PCLK1_Frequency ;
-    }
-    return timer_clock;
+  	// 计算TIM时钟频率
+	if (LL_RCC_GetAPB1Prescaler() == 0)
+	{
+		timer_clock = cpu.clock.pclk1;
+	}else{
+		timer_clock = cpu.clock.pclk1*2;
+	} 
+    return timer_clock;    
 }
 uint32_t InCapture::get_detect_max_frq()
 {

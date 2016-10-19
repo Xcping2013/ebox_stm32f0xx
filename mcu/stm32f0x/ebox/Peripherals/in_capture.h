@@ -20,6 +20,8 @@
  * -shentq                  -version 1.2(2016/08/17)
  *      *优化内部结构，降低频繁中断带来的额外计算开销
  *      *单独增加了波形基本测量工具，简化用户的波形测量编程
+ * -LQM(2016年10月6日)
+ *		  *移植到STM32F0平台。支持TIM1(PA8,9,10,11),TIM3(PA6,7;PB0,1,4,5),TIM2(PA0,1,2,3)
  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -30,8 +32,8 @@
 #include "common.h"
 #include "FunctionPointer.h"
 
-#define TIM_ICPOLARITY_FALLING TIM_ICPolarity_Falling
-#define TIM_ICPOLARITY_RISING  TIM_ICPolarity_Rising
+#define TIM_ICPOLARITY_FALLING LL_TIM_IC_POLARITY_FALLING //TIM_ICPolarity_Falling
+#define TIM_ICPOLARITY_RISING  LL_TIM_IC_POLARITY_RISING  //TIM_ICPolarity_Rising
 /*
 1.支持TIM2，3，4的ch1,2,3,4.共计12个通道
 2.支持测量周期、频率、高级用法支持测量占空比
@@ -61,71 +63,75 @@
 class InCapture
 {
 public:
-    InCapture(Gpio *capture_pin);
-    void        begin();//使用默认参数，分频系数为1；最大量程为120s
-    void        begin(uint16_t prescaler = 1);
-    void        set_count(uint16_t count);
-    void        set_polarity_falling();
-    void        set_polarity_rising();
+	InCapture(Gpio *capture_pin);
+	void        begin();//使用默认参数，分频系数为1；最大量程为120s
+	void        begin(uint16_t prescaler = 1);
+	void        set_count(uint16_t count);
+	void        set_polarity_falling();
+	void        set_polarity_rising();
 
 
-    //需要用户在中断中处理更精细的任务，处理状态机等事务，比如红外解码，超声波测距
-    uint32_t    get_capture();//
-    float       get_zone_time_us();//
+	//需要用户在中断中处理更精细的任务，处理状态机等事务，比如红外解码，超声波测距
+	uint32_t    get_capture();//
+	float       get_zone_time_us();//
 
-    //波形的基本的测量工具
-    void        complex_event();//适用于要求测量占空比的情况，但是最短脉宽不能低于4us****
-    void        simple_event();//适用于所有情况，执行效率高，最高可测180K,但是不能测量占空比
-    float       get_wave_frq();///<波形的频率
-    float       get_wave_peroid();///<波形的周期
-    float       get_wave_high_duty();///<波形的高电平占空比
-    float       get_wave_low_duty();///<波形的低电平占空比
-    float       get_wave_high_time();///<波形的高电平时间
-    float       get_wave_low_time();///<波形的低电平时间
-    bool        available();///<波形的测量完成
-    
-    //绑定中断
+	//波形的基本的测量工具
+	void        complex_event();//适用于要求测量占空比的情况，但是最短脉宽不能低于4us****
+	void        simple_event();//适用于所有情况，执行效率高，最高可测180K,但是不能测量占空比
+	float       get_wave_frq();///<波形的频率
+	float       get_wave_peroid();///<波形的周期
+	float       get_wave_high_duty();///<波形的高电平占空比
+	float       get_wave_low_duty();///<波形的低电平占空比
+	float       get_wave_high_time();///<波形的高电平时间
+	float       get_wave_low_time();///<波形的低电平时间
+	bool        available();///<波形的测量完成
 
-		
+	//绑定中断
+
+
 	void attach(void (*fptr)(void));
-    template<typename T>
-    void attach(T* tptr, void (T::*mptr)(void)) {
-        _irq.attach(tptr, mptr);
-    }
+	template<typename T>
+	void attach(T* tptr, void (T::*mptr)(void)) {
+		_irq.attach(tptr, mptr);
+	}
 
 	static void _irq_handler( uint32_t id);
-    
-    uint32_t    get_timer_clock();
-    uint32_t    get_timer_source_clock();
-    uint32_t    get_detect_max_frq();
-    uint32_t    get_detect_min_frq();
-    uint8_t     get_detect_min_pulse_us();
+	// 读取TIM相关信息
+	uint32_t    get_timer_clock();
+	uint32_t    get_timer_source_clock();
+	uint32_t    get_detect_max_frq();
+	uint32_t    get_detect_min_frq();
+	uint8_t     get_detect_min_pulse_us();
 
-    uint8_t     polarity;
-		
-		
+	uint8_t     polarity;
+
+
 
 private:
-    Gpio        *capture_pin;
-    TIM_TypeDef *TIMx;
-    uint8_t     ch;
-    uint16_t    period;//保存溢出值，用于计算占空比
-    uint16_t    prescaler;//保存溢出值，用于计算占空比
-    uint32_t    _capture;
-    uint32_t    high_capture;
-    uint32_t    low_capture;
+	Gpio        *capture_pin;
+	uint8_t		pin_AFx;		//对应pin的af参数
+	TIM_TypeDef *TIMx;
+	uint8_t     ch;
+	uint32_t	channel;	//TIM通道
+	uint16_t    period;		//保存周期值，用于计算占空比
+	uint16_t    prescaler;	//保存预分频，用于计算占空比
+	uint32_t    _capture;	//捕获值
+	uint32_t    high_capture;	//高电平捕获
+	uint32_t    low_capture;	//低电平捕获
+	uint32_t    peri;
+	uint32_t    fre;
 
-    uint16_t    *overflow_times;
-    uint32_t    last_value;
-    bool        _available;
-    uint32_t    timer_clock;
+	uint16_t    *overflow_times;
+	uint32_t    last_value;
+	bool        _available;
+	uint32_t    timer_clock;
 
-    void        init_info(Gpio *capture_pin);
-    void        base_init(uint16_t Period, uint16_t Prescaler);
+	void        init_info(Gpio *capture_pin);
+	void        base_init(uint16_t Period, uint16_t Prescaler);
 
-    uint16_t    (*_get_capture)(TIM_TypeDef *TIMx);
-    void        (*_set_polarity)(TIM_TypeDef *TIMx, uint16_t TIM_OCPolarity); //设置为下降沿或者上升沿捕获
+	uint32_t    (*_get_capture)(TIM_TypeDef *TIMx);
+//    void        (*_set_polarity)(TIM_TypeDef *TIMx, uint16_t TIM_OCPolarity); //设置为下降沿或者上升沿捕获
 protected:
-    FunctionPointer _irq;
+	FunctionPointer _irq;
 };
 #endif

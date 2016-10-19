@@ -54,28 +54,28 @@ Timer::Timer(TIM_TypeDef *TIMx)
 
 void Timer::begin(uint32_t frq)
 {
-    uint32_t _period  = 0;
-    uint32_t _prescaler = 1;
-    uint8_t index;
-	
-    if(frq >= get_max_frq())frq = get_max_frq();//控制最大频率
-    for(; _prescaler <= 0xffff; _prescaler++)
-    {
-        _period = get_timer_source_clock() / _prescaler / frq;
-        if((0xffff >= _period))break;
-    }
+	uint32_t _period  = 0;
+	uint32_t _prescaler = 1;
+	uint8_t index;
 
-    base_init(_period-1, _prescaler-1);
-		
-		switch((uint32_t)_TIMx)
-    {
-    case (uint32_t)TIM1_BASE:
-        index = TIM1_IT_Update;
-        break;
+	if (frq >= get_max_frq())frq = get_max_frq();//控制最大频率
+	for (; _prescaler <= 0xffff; _prescaler++)
+	{
+		_period = get_timer_source_clock() / _prescaler / frq;
+		if ((0xffff >= _period))break;
+	}
+
+	base_init(_period-1, _prescaler-1);
+
+	switch ((uint32_t)_TIMx)
+	{
+	case (uint32_t)TIM1_BASE:
+		index = TIM1_IT_Update;
+		break;
 #ifdef TIM2
-    case (uint32_t)TIM2_BASE:
-        index = TIM2_IT_Update;
-        break;
+	case (uint32_t)TIM2_BASE:
+		index = TIM2_IT_Update;
+		break;
 #endif
 //    case (uint32_t)TIM3_BASE:
 //        index = TIM3_IT_Update;
@@ -92,8 +92,8 @@ void Timer::begin(uint32_t frq)
 //    case (uint32_t)TIM7_BASE:
 //        index = TIM7_IT_Update;
 //        break;
-    }		
-		tim_irq_init(index,(&Timer::_irq_handler),(uint32_t)this);
+	}
+	tim_irq_init(index,(&Timer::_irq_handler),(uint32_t)this);
 }
 
 
