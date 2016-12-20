@@ -13,3 +13,7 @@
 *.txt
 *.bin
 mbeds.xmp.lnk
+*.sct
+JLinkLog.txt
+*.lst
+*.iex
